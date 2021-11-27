@@ -346,32 +346,36 @@ namespace PomodoroTimer
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (Saniye > 0)
+            MessageBoxResult result = MessageBox.Show("İptal etmek istediğinize emin misiniz?", "İptal", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                dispatcherTimer.Stop();
-                lblSure.Content = "00:00";
-                Saniye = 0;
-                btnStop.Content = "Dur";
-                ButonlariKilitle(true);
-                ButonlarinGorunurlugu(false);
+                if (Saniye > 0)
+                {
+                    dispatcherTimer.Stop();
+                    lblSure.Content = "00:00";
+                    Saniye = 0;
+                    btnStop.Content = "Dur";
+                    ButonlariKilitle(true);
+                    ButonlarinGorunurlugu(false);
 
-                if (Durum == "Pomodoro")
-                {
-                    PomodoroSayisi--;
-                    btnPomodoro.Content = "Pomodoro (" + PomodoroSayisi + ")";
+                    if (Durum == "Pomodoro")
+                    {
+                        PomodoroSayisi--;
+                        btnPomodoro.Content = "Pomodoro (" + PomodoroSayisi + ")";
+                    }
+                    else if (Durum == "KisaMola")
+                    {
+                        KisaMolaSayisi--;
+                        btnShortBreak.Content = "Kısa Mola (" + KisaMolaSayisi + ")";
+                    }
+                    else if (Durum == "UzunMola")
+                    {
+                        UzunMolaSayisi--;
+                        btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";
+                    }
+                    Durum = "";
+                    BasliklariKalinlastir(Durum);
                 }
-                else if (Durum == "KisaMola")
-                {
-                    KisaMolaSayisi--;
-                    btnShortBreak.Content = "Kısa Mola (" + KisaMolaSayisi + ")";
-                }
-                else if (Durum == "UzunMola")
-                {
-                    UzunMolaSayisi--;
-                    btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";
-                }
-                Durum = "";
-                BasliklariKalinlastir(Durum);
             }
         }
     }
