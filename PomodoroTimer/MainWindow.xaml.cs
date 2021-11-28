@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace PomodoroTimer
@@ -336,12 +335,18 @@ namespace PomodoroTimer
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            if (btnCancel.IsEnabled)
+            if (Saniye>0)
             {
-                btnCancel.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                MessageBoxResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }
             }
-
-            System.Windows.Application.Current.Shutdown();
+            else
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
