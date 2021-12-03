@@ -102,7 +102,6 @@ namespace PomodoroTimer
                 List<string> satirlar = new List<string>(tumSatirlar);
                 foreach (string satir in satirlar)
                 {
-                    tumListe.Add(satir);
                     stringDizi = satir.Split(',');
 
                     BirPomodoroZamani = Convert.ToInt32(stringDizi[0]);
@@ -124,17 +123,17 @@ namespace PomodoroTimer
             if (pomodoroSayisiListesi.Count > 0)
             {
                 pomodoroSayisiListesi.RemoveAt(pomodoroSayisiListesi.Count - 1);
-                pomodoroSayisiListesi.Add(pomodoroSayisiListesi.ToString());
+                pomodoroSayisiListesi.Add(PomodoroSayisi.ToString());
             }
             if (kisaMolaSayisiListesi.Count > 0)
             {
                 kisaMolaSayisiListesi.RemoveAt(kisaMolaSayisiListesi.Count - 1);
-                kisaMolaSayisiListesi.Add(kisaMolaSayisiListesi.ToString());
+                kisaMolaSayisiListesi.Add(KisaMolaSayisi.ToString());
             }
             if (uzunMolaSayisiListesi.Count > 0)
             {
                 pomodoroSayisiListesi.RemoveAt(pomodoroSayisiListesi.Count - 1);
-                pomodoroSayisiListesi.Add(pomodoroSayisiListesi.ToString());
+                pomodoroSayisiListesi.Add(PomodoroSayisi.ToString());
             }
             if (tumListe.Count > 0)
             {
