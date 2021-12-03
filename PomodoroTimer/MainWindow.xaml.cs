@@ -335,7 +335,7 @@ namespace PomodoroTimer
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            if (Saniye>0)
+            if (Saniye > 0)
             {
                 MessageBoxResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
