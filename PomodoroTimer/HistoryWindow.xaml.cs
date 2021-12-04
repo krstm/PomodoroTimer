@@ -39,7 +39,7 @@ namespace PomodoroTimer
             {
                 var tumSatirlar = File.ReadAllLines(mainWindow.DbFileName);
                 List<string> satirlar = new List<string>(tumSatirlar);
-                int i = 0;
+                int i = 1;
                 foreach (string satir in satirlar)
                 {
                     mainWindow.stringDizi = satir.Split(',');
