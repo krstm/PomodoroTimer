@@ -25,26 +25,28 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="SaddleBrown">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Label x:Name="lblSure" Content="00:00" Grid.Row="1" FontSize="120" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="btnPomodoro" Content="Pomodoro (0)" Height="70" Margin="0,10,0,0" Width="Auto" FontSize="45" Foreground="Black" Background="SaddleBrown" Click="btnPomodoro_Click"></Button>
-            <Button x:Name="btnShortBreak" Height="50" Margin="0,10,0,0" Content="Kısa Mola (0)" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnShortBreak_Click" ></Button>
-            <Button x:Name="btnLongBreak" Height="50" Margin="0,10,0,0" Content="Uzun Mola (0)" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnLongBreak_Click"  ></Button>
-            <Button x:Name="btnStop" Height="50" Margin="0,10,0,0" Content="Dur" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnStop_Click"></Button>
-            <Button x:Name="btnCancel" Height="50" Content="İptal" Width="300" FontSize="25" Foreground="Black" Background="SaddleBrown" Visibility="Hidden"  Margin="0,20,0,0" Click="btnCancel_Click"></Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
-            <Button x:Name="btnMinimize" Content="-" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,15,0" Click="btnMinimize_Click"></Button>
-            <Button x:Name="btnExit" Content="x" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,10,0" Click="btnExit_Click"></Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnAyarlar_Click"></Button>
-        </StackPanel>
-    </Grid>
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="SaddleBrown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label x:Name="lblSure" Content="00:00" Grid.Row="1" FontSize="120" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="btnPomodoro" Content="Pomodoro (0)" Height="70" Margin="0,10,0,0" Width="Auto" FontSize="45" Foreground="Black" Background="SaddleBrown" Click="btnPomodoro_Click"></Button>
+                <Button x:Name="btnShortBreak" Height="50" Margin="0,10,0,0" Content="Kısa Mola (0)" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnShortBreak_Click" ></Button>
+                <Button x:Name="btnLongBreak" Height="50" Margin="0,10,0,0" Content="Uzun Mola (0)" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnLongBreak_Click"  ></Button>
+                <Button x:Name="btnStop" Height="50" Margin="0,10,0,0" Content="Dur" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnStop_Click"></Button>
+                <Button x:Name="btnCancel" Height="50" Content="İptal" Width="300" FontSize="25" Foreground="Black" Background="SaddleBrown" Visibility="Hidden"  Margin="0,20,0,0" Click="btnCancel_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
+                <Button x:Name="btnMinimize" Content="-" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,15,0" Click="btnMinimize_Click"></Button>
+                <Button x:Name="btnExit" Content="x" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,10,0" Click="btnExit_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnAyarlar_Click"></Button>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
