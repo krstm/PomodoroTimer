@@ -44,7 +44,7 @@
             <Button x:Name="btnExit" Content="x" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,10,0" Click="btnExit_Click"></Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,0,0,0" Click="btnAyarlar_Click"></Button>
+            <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnAyarlar_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>
