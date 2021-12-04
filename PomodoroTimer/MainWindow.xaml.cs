@@ -28,14 +28,14 @@ namespace PomodoroTimer
         public int BirKisaMolaZamani { get; set; } = 5;
         public int BirUzunMolaZamani { get; set; } = 15;
         private string Durum { get; set; }
-        private string DbFileName { get; } = "PomodoroTimerDb.txt";
+        public string DbFileName { get; } = "PomodoroTimerDb.txt";
         private string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
         public List<string> tarihListesi = new List<string>();
         public List<string> pomodoroSayisiListesi = new List<string>();
         public List<string> kisaMolaSayisiListesi = new List<string>();
         public List<string> uzunMolaSayisiListesi = new List<string>();
         public List<string> tumListe = new List<string>();
-        private string[] stringDizi;
+        public string[] stringDizi;
 
         private void IlkAyarlar()
         {
@@ -398,6 +398,19 @@ namespace PomodoroTimer
             else
             {
                 MessageBox.Show("Ayarları açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
+            }
+        }
+
+        private void btnGecmis_Click(object sender, RoutedEventArgs e)
+        {
+            if (Saniye < 1)
+            {
+                HistoryWindow historyWindow = new HistoryWindow();
+                historyWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Geçmişi açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
             }
         }
     }

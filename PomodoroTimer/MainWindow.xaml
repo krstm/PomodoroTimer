@@ -46,6 +46,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnAyarlar_Click"></Button>
+
+                <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnGecmis_Click"></Button>
             </StackPanel>
         </Grid>
     </Border>
