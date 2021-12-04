@@ -20,21 +20,21 @@ namespace PomodoroTimer
 
         private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         private int Saniye { get; set; }
-        private int PomodoroSayisi { get; set; }
-        private int KisaMolaSayisi { get; set; }
-        private int UzunMolaSayisi { get; set; }
+        public int PomodoroSayisi { get; set; }
+        public int KisaMolaSayisi { get; set; }
+        public int UzunMolaSayisi { get; set; }
         private int BirDakika { get; } = 60;
-        private int BirPomodoroZamani { get; set; } = 25;
-        private int BirKisaMolaZamani { get; set; } = 5;
-        private int BirUzunMolaZamani { get; set; } = 15;
+        public int BirPomodoroZamani { get; set; } = 25;
+        public int BirKisaMolaZamani { get; set; } = 5;
+        public int BirUzunMolaZamani { get; set; } = 15;
         private string Durum { get; set; }
         private string DbFileName { get; } = "PomodoroTimerDb.txt";
         private string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
-        private List<string> tarihListesi = new List<string>();
-        private List<string> pomodoroSayisiListesi = new List<string>();
-        private List<string> kisaMolaSayisiListesi = new List<string>();
-        private List<string> uzunMolaSayisiListesi = new List<string>();
-        private List<string> tumListe = new List<string>();
+        public List<string> tarihListesi = new List<string>();
+        public List<string> pomodoroSayisiListesi = new List<string>();
+        public List<string> kisaMolaSayisiListesi = new List<string>();
+        public List<string> uzunMolaSayisiListesi = new List<string>();
+        public List<string> tumListe = new List<string>();
         private string[] stringDizi;
 
         private void IlkAyarlar()
@@ -380,6 +380,19 @@ namespace PomodoroTimer
                     Durum = "";
                     BasliklariKalinlastir(Durum);
                 }
+            }
+        }
+
+        private void btnAyarlar_Click(object sender, RoutedEventArgs e)
+        {
+            if (Saniye < 1)
+            {
+                SettingsWindow settingsWindow = new SettingsWindow();
+                settingsWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Ayarları açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
             }
         }
     }

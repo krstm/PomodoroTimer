@@ -1,0 +1,68 @@
+﻿<Window x:Class="PomodoroTimer.SettingsWindow"
+        MouseDown="Window_MouseDown" WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Loaded="Window_Loaded"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Ayarlar" Height="300" Width="900" MinHeight="300" MinWidth="900" MaxHeight="300" MaxWidth="900">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Green" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="SaddleBrown" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="SaddleBrown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="0">
+                <Label Content="Bir Pomodoro Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI"></Label>
+                <TextBox x:Name="tbxPomodoroSuresi" FontSize="15" Width="40" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                <Label Content="Bir Kısa Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI"></Label>
+                <TextBox x:Name="tbxKisaMolaSuresi" FontSize="15" Width="40" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                <Label Content="Bir Uzun Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI"></Label>
+                <TextBox x:Name="tbxUzunMolaSuresi" FontSize="15" Width="40" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="1">
+                <Label Content="Toplam Pomodoro Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI"></Label>
+                <TextBox x:Name="tbxPomodoroSayisi" FontSize="15" Width="40" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                <Label Content="Toplam Kısa Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI"></Label>
+                <TextBox x:Name="tbxKisaMolaSayisi" FontSize="15" Width="40" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                <Label Content="Toplam Uzun Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI"></Label>
+                <TextBox x:Name="tbxUzunMolaSayisi" FontSize="15" Width="40" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="30" FontWeight="Bold" Click="btnIptal_Click" Background="SaddleBrown"></Button>
+                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="30" FontWeight="Bold" Click="btnKaydet_Click" Background="SaddleBrown"></Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
