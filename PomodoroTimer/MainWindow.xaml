@@ -40,14 +40,20 @@
                 <Button x:Name="btnStop" Height="50" Margin="0,10,0,0" Content="Dur" Width="Auto" FontSize="35" Foreground="Black" Background="SaddleBrown" Click="btnStop_Click"></Button>
                 <Button x:Name="btnCancel" Height="50" Content="İptal" Width="300" FontSize="25" Foreground="Black" Background="SaddleBrown" Visibility="Hidden"  Margin="0,20,0,0" Click="btnCancel_Click"></Button>
             </StackPanel>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
+                <Label x:Name="lblToplamPomodoro" Content="Toplam Pomodoro Dakikası: 0" Height="30"  FontSize="10" Foreground="Black" Background="SaddleBrown" VerticalContentAlignment="Center" Margin="0,2,5,0">
+                </Label>
                 <Button x:Name="btnMinimize" Content="-" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,15,0" Click="btnMinimize_Click"></Button>
                 <Button x:Name="btnExit" Content="x" Height="30"  FontSize="20" Foreground="Black" Background="SaddleBrown" Margin="0,0,10,0" Click="btnExit_Click"></Button>
             </StackPanel>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnAyarlar_Click"></Button>
+                <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,1,0,0" VerticalContentAlignment="Center" Click="btnAyarlar_Click"></Button>
 
-                <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,5,0,0" Click="btnGecmis_Click"></Button>
+                <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" Foreground="Black" Background="SaddleBrown" Margin="10,1,0,0" VerticalContentAlignment="Center" Click="btnGecmis_Click"></Button>
+
+                
             </StackPanel>
         </Grid>
     </Border>

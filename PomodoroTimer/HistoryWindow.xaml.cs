@@ -28,6 +28,7 @@ namespace PomodoroTimer
             public string PomodoroSayisi { get; set; }
             public string KisaMolaSayisi { get; set; }
             public string UzunMolaSayisi { get; set; }
+            public string ToplamPomodoroDakikasi { get; set; }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -50,11 +51,13 @@ namespace PomodoroTimer
                         Tarih = mainWindow.stringDizi[0],
                         PomodoroSayisi = mainWindow.stringDizi[1],
                         KisaMolaSayisi = mainWindow.stringDizi[2],
-                        UzunMolaSayisi = mainWindow.stringDizi[3]
+                        UzunMolaSayisi = mainWindow.stringDizi[3],
+                        ToplamPomodoroDakikasi = mainWindow.stringDizi[4]
                     });
 
                     i++;
                 }
+
                 dataGridTablo.ItemsSource = gecmisList;
             }
             else

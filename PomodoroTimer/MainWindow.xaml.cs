@@ -30,12 +30,16 @@ namespace PomodoroTimer
         private string Durum { get; set; }
         public string DbFileName { get; } = "PomodoroTimerDb.txt";
         private string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
+
         public List<string> tarihListesi = new List<string>();
         public List<string> pomodoroSayisiListesi = new List<string>();
         public List<string> kisaMolaSayisiListesi = new List<string>();
         public List<string> uzunMolaSayisiListesi = new List<string>();
         public List<string> tumListe = new List<string>();
         public string[] stringDizi;
+
+        public int GunlukToplamPomodoroDakikasi { get; set; } = 0;
+        public List<string> GunlukToplamPomodoroDakikaListesi = new List<string>();
 
         private void IlkAyarlar()
         {
@@ -59,6 +63,7 @@ namespace PomodoroTimer
                     pomodoroSayisiListesi.Add(stringDizi[1]);
                     kisaMolaSayisiListesi.Add(stringDizi[2]);
                     uzunMolaSayisiListesi.Add(stringDizi[3]);
+                    GunlukToplamPomodoroDakikaListesi.Add(stringDizi[4]);
                 }
                 if (tarihListesi[tarihListesi.Count - 1] != DateTime.Now.ToString("dd/MM/yyyy"))
                 {
@@ -66,7 +71,10 @@ namespace PomodoroTimer
                     pomodoroSayisiListesi.Add(PomodoroSayisi.ToString());
                     kisaMolaSayisiListesi.Add(KisaMolaSayisi.ToString());
                     uzunMolaSayisiListesi.Add(UzunMolaSayisi.ToString());
-                    tumListe.Add(DateTime.Now.ToString("dd/MM/yyyy") + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString());
+                    GunlukToplamPomodoroDakikaListesi.Add(GunlukToplamPomodoroDakikasi.ToString());
+
+                    tumListe.Add(DateTime.Now.ToString("dd/MM/yyyy") + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString() + "," + GunlukToplamPomodoroDakikasi.ToString());
+
                     System.IO.File.WriteAllLines("PomodoroTimerDb.txt", tumListe);
                     YenidenBaslat();
                 }
@@ -80,6 +88,9 @@ namespace PomodoroTimer
 
                     UzunMolaSayisi = Convert.ToInt32(uzunMolaSayisiListesi[uzunMolaSayisiListesi.Count - 1]);
                     btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";
+
+                    GunlukToplamPomodoroDakikasi = Convert.ToInt32(GunlukToplamPomodoroDakikaListesi[GunlukToplamPomodoroDakikaListesi.Count - 1]);
+                    lblToplamPomodoro.Content = "Toplam Pomodoro Dakikası: " + GunlukToplamPomodoroDakikasi;
                 }
             }
             else
@@ -88,7 +99,10 @@ namespace PomodoroTimer
                 pomodoroSayisiListesi.Add(PomodoroSayisi.ToString());
                 kisaMolaSayisiListesi.Add(KisaMolaSayisi.ToString());
                 uzunMolaSayisiListesi.Add(UzunMolaSayisi.ToString());
-                tumListe.Add(DateTime.Now.ToString("dd/MM/yyyy") + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString());
+                GunlukToplamPomodoroDakikaListesi.Add(GunlukToplamPomodoroDakikasi.ToString());
+
+                tumListe.Add(DateTime.Now.ToString("dd/MM/yyyy") + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString() + "," + GunlukToplamPomodoroDakikasi.ToString());
+
                 System.IO.File.WriteAllLines("PomodoroTimerDb.txt", tumListe);
                 YenidenBaslat();
             }
@@ -135,10 +149,24 @@ namespace PomodoroTimer
                 pomodoroSayisiListesi.RemoveAt(pomodoroSayisiListesi.Count - 1);
                 pomodoroSayisiListesi.Add(PomodoroSayisi.ToString());
             }
+            if (GunlukToplamPomodoroDakikaListesi.Count > 0)
+            {
+                GunlukToplamPomodoroDakikaListesi.RemoveAt(GunlukToplamPomodoroDakikaListesi.Count - 1);
+                GunlukToplamPomodoroDakikaListesi.Add(GunlukToplamPomodoroDakikasi.ToString());
+            }
+
+            switch (Durum)
+            {
+                case "Pomodoro":
+                    GunlukToplamPomodoroDakikasi += BirPomodoroZamani;
+                    lblToplamPomodoro.Content = "Toplam Pomodoro Dakikası: " + GunlukToplamPomodoroDakikasi;
+                    break;
+            }
+
             if (tumListe.Count > 0)
             {
                 tumListe.RemoveAt(tumListe.Count - 1);
-                tumListe.Add(tarihListesi[tarihListesi.Count - 1] + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString());
+                tumListe.Add(tarihListesi[tarihListesi.Count - 1] + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString() + "," + GunlukToplamPomodoroDakikasi.ToString());
             }
 
             if (tarihListesi.Count > 0 && pomodoroSayisiListesi.Count > 0)
@@ -235,12 +263,12 @@ namespace PomodoroTimer
                 PomodoroSayisi++;
                 btnPomodoro.Content = "Pomodoro (" + PomodoroSayisi + ")";
             }
-            else if (Durum == "KisaMola")
+            else if (Durum == "Kısa Mola")
             {
                 KisaMolaSayisi++;
                 btnShortBreak.Content = "Kısa Mola (" + KisaMolaSayisi + ")";
             }
-            else if (Durum == "UzunMola")
+            else if (Durum == "Uzun Mola")
             {
                 UzunMolaSayisi++;
                 btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";
@@ -255,11 +283,11 @@ namespace PomodoroTimer
             {
                 btnPomodoro.FontWeight = FontWeights.Bold;
             }
-            else if (baslik == "KisaMola")
+            else if (baslik == "Kısa Mola")
             {
                 btnShortBreak.FontWeight = FontWeights.Bold;
             }
-            else if (baslik == "UzunMola")
+            else if (baslik == "Uzun Mola")
             {
                 btnLongBreak.FontWeight = FontWeights.Bold;
             }
@@ -278,12 +306,12 @@ namespace PomodoroTimer
 
         private void btnShortBreak_Click(object sender, RoutedEventArgs e)
         {
-            GeriSayim(BirKisaMolaZamani * BirDakika, "KisaMola");
+            GeriSayim(BirKisaMolaZamani * BirDakika, "Kısa Mola");
         }
 
         private void btnLongBreak_Click(object sender, RoutedEventArgs e)
         {
-            GeriSayim(BirUzunMolaZamani * BirDakika, "UzunMola");
+            GeriSayim(BirUzunMolaZamani * BirDakika, "Uzun Mola");
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -372,12 +400,12 @@ namespace PomodoroTimer
                         PomodoroSayisi--;
                         btnPomodoro.Content = "Pomodoro (" + PomodoroSayisi + ")";
                     }
-                    else if (Durum == "KisaMola")
+                    else if (Durum == "Kısa Mola")
                     {
                         KisaMolaSayisi--;
                         btnShortBreak.Content = "Kısa Mola (" + KisaMolaSayisi + ")";
                     }
-                    else if (Durum == "UzunMola")
+                    else if (Durum == "Uzun Mola")
                     {
                         UzunMolaSayisi--;
                         btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";

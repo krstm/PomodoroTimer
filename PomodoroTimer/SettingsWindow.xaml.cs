@@ -24,14 +24,15 @@ namespace PomodoroTimer
 
         private void btnKaydet_Click(object sender, RoutedEventArgs e)
         {
-            if (Int32.TryParse(tbxKisaMolaSayisi.Text, out int value1) && Int32.TryParse(tbxKisaMolaSuresi.Text, out int value2) && Int32.TryParse(tbxPomodoroSayisi.Text, out int value3) && Int32.TryParse(tbxPomodoroSuresi.Text, out int value4) && Int32.TryParse(tbxUzunMolaSayisi.Text, out int value5) && Int32.TryParse(tbxUzunMolaSuresi.Text, out int value6))
+            if (Int32.TryParse(tbxKisaMolaSayisi.Text, out int value1) && Int32.TryParse(tbxKisaMolaSuresi.Text, out int value2) && Int32.TryParse(tbxPomodoroSayisi.Text, out int value3) && Int32.TryParse(tbxPomodoroSuresi.Text, out int value4) && Int32.TryParse(tbxUzunMolaSayisi.Text, out int value5) && Int32.TryParse(tbxUzunMolaSuresi.Text, out int value6) && Int32.TryParse(tbxGunlukPomodoroDakikasi.Text, out int value7))
             {
-                if (tbxKisaMolaSayisi.Text != string.Empty && tbxKisaMolaSuresi.Text != string.Empty && tbxPomodoroSayisi.Text != string.Empty && tbxPomodoroSuresi.Text != string.Empty && tbxUzunMolaSayisi.Text != string.Empty && tbxUzunMolaSuresi.Text != string.Empty)
+                if (tbxKisaMolaSayisi.Text != string.Empty && tbxKisaMolaSuresi.Text != string.Empty && tbxPomodoroSayisi.Text != string.Empty && tbxPomodoroSuresi.Text != string.Empty && tbxUzunMolaSayisi.Text != string.Empty && tbxUzunMolaSuresi.Text != string.Empty && tbxGunlukPomodoroDakikasi.Text != string.Empty)
                 {
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.BirKisaMolaZamani = Convert.ToInt32(tbxKisaMolaSuresi.Text);
                     mainWindow.BirPomodoroZamani = Convert.ToInt32(tbxPomodoroSuresi.Text);
                     mainWindow.BirUzunMolaZamani = Convert.ToInt32(tbxUzunMolaSuresi.Text);
+                    mainWindow.GunlukToplamPomodoroDakikasi = Convert.ToInt32(tbxGunlukPomodoroDakikasi.Text);
 
                     mainWindow.KisaMolaSayisi = Convert.ToInt32(tbxKisaMolaSayisi.Text);
                     mainWindow.PomodoroSayisi = Convert.ToInt32(tbxPomodoroSayisi.Text);
@@ -56,10 +57,15 @@ namespace PomodoroTimer
                         mainWindow.pomodoroSayisiListesi.RemoveAt(mainWindow.pomodoroSayisiListesi.Count - 1);
                         mainWindow.pomodoroSayisiListesi.Add(mainWindow.PomodoroSayisi.ToString());
                     }
+                    if (mainWindow.GunlukToplamPomodoroDakikaListesi.Count > 0)
+                    {
+                        mainWindow.GunlukToplamPomodoroDakikaListesi.RemoveAt(mainWindow.GunlukToplamPomodoroDakikaListesi.Count - 1);
+                        mainWindow.GunlukToplamPomodoroDakikaListesi.Add(mainWindow.GunlukToplamPomodoroDakikasi.ToString());
+                    }
                     if (mainWindow.tumListe.Count > 0)
                     {
                         mainWindow.tumListe.RemoveAt(mainWindow.tumListe.Count - 1);
-                        mainWindow.tumListe.Add(mainWindow.tarihListesi[mainWindow.tarihListesi.Count - 1] + "," + mainWindow.PomodoroSayisi.ToString() + "," + mainWindow.KisaMolaSayisi.ToString() + "," + mainWindow.UzunMolaSayisi.ToString());
+                        mainWindow.tumListe.Add(mainWindow.tarihListesi[mainWindow.tarihListesi.Count - 1] + "," + mainWindow.PomodoroSayisi.ToString() + "," + mainWindow.KisaMolaSayisi.ToString() + "," + mainWindow.UzunMolaSayisi.ToString() + "," + mainWindow.GunlukToplamPomodoroDakikasi.ToString());
                     }
 
                     if (mainWindow.tarihListesi.Count > 0 && mainWindow.pomodoroSayisiListesi.Count > 0)
@@ -94,6 +100,7 @@ namespace PomodoroTimer
             tbxKisaMolaSuresi.Text = mainWindow.BirKisaMolaZamani.ToString();
             tbxPomodoroSuresi.Text = mainWindow.BirPomodoroZamani.ToString();
             tbxUzunMolaSuresi.Text = mainWindow.BirUzunMolaZamani.ToString();
+            tbxGunlukPomodoroDakikasi.Text = mainWindow.GunlukToplamPomodoroDakikasi.ToString();
 
             tbxKisaMolaSayisi.Text = mainWindow.KisaMolaSayisi.ToString();
             tbxPomodoroSayisi.Text = mainWindow.PomodoroSayisi.ToString();

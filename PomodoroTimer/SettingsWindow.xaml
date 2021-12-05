@@ -12,7 +12,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="SaddleBrown" BorderThickness="1">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="DarkOliveGreen" BorderThickness="1">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
@@ -26,7 +26,7 @@
         </Style>
     </Window.Resources>
     <Border BorderBrush="Black" BorderThickness="1">
-        <Grid Background="SaddleBrown">
+        <Grid Background="DarkOliveGreen">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -39,20 +39,22 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="0">
-                    <Label Content="Pomodoro Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Pomodoro Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxPomodoroSuresi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Kısa Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Kısa Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxKisaMolaSuresi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Uzun Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Uzun Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxUzunMolaSuresi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                    <Label Content="Toplam Pomodoro Dakikası:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <TextBox x:Name="tbxGunlukPomodoroDakikasi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1">
-                    <Label Content="Pomodoro Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Pomodoro Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxPomodoroSayisi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Kısa Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Kısa Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxKisaMolaSayisi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Uzun Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Uzun Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxUzunMolaSayisi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
                 </StackPanel>
             </Grid>
@@ -62,8 +64,8 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="25" Click="btnIptal_Click" Background="SaddleBrown"></Button>
-                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="25" Click="btnKaydet_Click" Background="SaddleBrown"></Button>
+                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="25" Click="btnIptal_Click" Background="DarkOliveGreen"></Button>
+                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="25" Click="btnKaydet_Click" Background="DarkOliveGreen"></Button>
             </Grid>
         </Grid>
     </Border>
