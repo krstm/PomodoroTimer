@@ -24,19 +24,14 @@ namespace PomodoroTimer
 
         private void btnKaydet_Click(object sender, RoutedEventArgs e)
         {
-            if (Int32.TryParse(tbxKisaMolaSayisi.Text, out int value1) && Int32.TryParse(tbxKisaMolaSuresi.Text, out int value2) && Int32.TryParse(tbxPomodoroSayisi.Text, out int value3) && Int32.TryParse(tbxPomodoroSuresi.Text, out int value4) && Int32.TryParse(tbxUzunMolaSayisi.Text, out int value5) && Int32.TryParse(tbxUzunMolaSuresi.Text, out int value6) && Int32.TryParse(tbxGunlukPomodoroDakikasi.Text, out int value7))
+            if (Int32.TryParse(tbxKisaMolaSuresi.Text, out int value2) && Int32.TryParse(tbxPomodoroSuresi.Text, out int value4) && Int32.TryParse(tbxUzunMolaSuresi.Text, out int value6))
             {
-                if (tbxKisaMolaSayisi.Text != string.Empty && tbxKisaMolaSuresi.Text != string.Empty && tbxPomodoroSayisi.Text != string.Empty && tbxPomodoroSuresi.Text != string.Empty && tbxUzunMolaSayisi.Text != string.Empty && tbxUzunMolaSuresi.Text != string.Empty && tbxGunlukPomodoroDakikasi.Text != string.Empty)
+                if (tbxKisaMolaSuresi.Text != string.Empty && tbxPomodoroSuresi.Text != string.Empty && tbxUzunMolaSuresi.Text != string.Empty)
                 {
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.BirKisaMolaZamani = Convert.ToInt32(tbxKisaMolaSuresi.Text);
                     mainWindow.BirPomodoroZamani = Convert.ToInt32(tbxPomodoroSuresi.Text);
                     mainWindow.BirUzunMolaZamani = Convert.ToInt32(tbxUzunMolaSuresi.Text);
-                    mainWindow.GunlukToplamPomodoroDakikasi = Convert.ToInt32(tbxGunlukPomodoroDakikasi.Text);
-
-                    mainWindow.KisaMolaSayisi = Convert.ToInt32(tbxKisaMolaSayisi.Text);
-                    mainWindow.PomodoroSayisi = Convert.ToInt32(tbxPomodoroSayisi.Text);
-                    mainWindow.UzunMolaSayisi = Convert.ToInt32(tbxUzunMolaSayisi.Text);
 
                     System.IO.File.WriteAllText("PomodoroTimerSettings.txt", mainWindow.BirPomodoroZamani.ToString() + "," +
                        mainWindow.BirKisaMolaZamani.ToString() + "," +
@@ -100,11 +95,6 @@ namespace PomodoroTimer
             tbxKisaMolaSuresi.Text = mainWindow.BirKisaMolaZamani.ToString();
             tbxPomodoroSuresi.Text = mainWindow.BirPomodoroZamani.ToString();
             tbxUzunMolaSuresi.Text = mainWindow.BirUzunMolaZamani.ToString();
-            tbxGunlukPomodoroDakikasi.Text = mainWindow.GunlukToplamPomodoroDakikasi.ToString();
-
-            tbxKisaMolaSayisi.Text = mainWindow.KisaMolaSayisi.ToString();
-            tbxPomodoroSayisi.Text = mainWindow.PomodoroSayisi.ToString();
-            tbxUzunMolaSayisi.Text = mainWindow.UzunMolaSayisi.ToString();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

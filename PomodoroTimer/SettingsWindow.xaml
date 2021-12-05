@@ -35,27 +35,15 @@
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="0">
-                    <Label Content="Pomodoro Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxPomodoroSuresi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Kısa Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxKisaMolaSuresi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Uzun Mola Süresi:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxUzunMolaSuresi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Toplam Pomodoro Dakikası:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxGunlukPomodoroDakikasi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1">
-                    <Label Content="Pomodoro Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxPomodoroSayisi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Kısa Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxKisaMolaSayisi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Uzun Mola Sayısı:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold"></Label>
-                    <TextBox x:Name="tbxUzunMolaSayisi" FontSize="15" Width="60" Background="GhostWhite" Margin="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                    <Label Content="Pomodoro Süresi: (Dakika)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <TextBox x:Name="tbxPomodoroSuresi" FontSize="15" Width="80" Background="GhostWhite" Margin="20" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                    <Label Content="Kısa Mola Süresi: (Dakika)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <TextBox x:Name="tbxKisaMolaSuresi" FontSize="15" Width="80" Background="GhostWhite" Margin="20" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                    <Label Content="Uzun Mola Süresi: (Dakika)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <TextBox x:Name="tbxUzunMolaSuresi" FontSize="15" Width="80" Background="GhostWhite" Margin="20" PreviewTextInput="NumberValidationTextBox"></TextBox>
                 </StackPanel>
             </Grid>
 
