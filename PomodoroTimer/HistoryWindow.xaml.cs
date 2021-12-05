@@ -26,7 +26,7 @@ namespace PomodoroTimer
 
         private class Gecmis
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
             public string Tarih { get; set; }
             public string PomodoroSayisi { get; set; }
             public string KisaMolaSayisi { get; set; }
@@ -36,9 +36,10 @@ namespace PomodoroTimer
 
         private List<Gecmis> gecmisList = new List<Gecmis>();
 
+        MainWindow mainWindow = new MainWindow();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            
 
             if (File.Exists(mainWindow.DbFileName))
             {
@@ -51,7 +52,7 @@ namespace PomodoroTimer
 
                     gecmisList.Add(new Gecmis()
                     {
-                        Id = i,
+                        Id = i.ToString(),
                         Tarih = mainWindow.stringDizi[0],
                         PomodoroSayisi = mainWindow.stringDizi[1],
                         KisaMolaSayisi = mainWindow.stringDizi[2],
@@ -97,9 +98,18 @@ namespace PomodoroTimer
 
             foreach (Gecmis gecmis in gecmisList)
             {
-                if (regex.IsMatch(gecmis.Tarih) && Int32.TryParse(gecmis.PomodoroSayisi, out int value2) && Int32.TryParse(gecmis.KisaMolaSayisi, out int value3) && Int32.TryParse(gecmis.UzunMolaSayisi, out int value4))
+                if (!(string.IsNullOrEmpty(gecmis.Id.ToString())) &&
+                    !(string.IsNullOrEmpty(gecmis.Tarih.ToString())) &&
+                    !(string.IsNullOrEmpty(gecmis.PomodoroSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(gecmis.KisaMolaSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(gecmis.UzunMolaSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(gecmis.ToplamPomodoroDakikasi.ToString())))
                 {
-                    if (gecmis.Tarih != string.Empty && gecmis.PomodoroSayisi != string.Empty && gecmis.KisaMolaSayisi != string.Empty && gecmis.UzunMolaSayisi != string.Empty && gecmis.ToplamPomodoroDakikasi != string.Empty)
+                    if (regex.IsMatch(gecmis.Tarih) && 
+                        Int32.TryParse(gecmis.Id, out int value1) && 
+                        Int32.TryParse(gecmis.PomodoroSayisi, out int value2) && 
+                        Int32.TryParse(gecmis.KisaMolaSayisi, out int value3) && 
+                        Int32.TryParse(gecmis.UzunMolaSayisi, out int value4))
                     {
                         tumListe.Add(gecmis.Tarih.ToString() + "," + gecmis.PomodoroSayisi.ToString() + "," + gecmis.KisaMolaSayisi.ToString() + "," + gecmis.UzunMolaSayisi.ToString() + "," + gecmis.ToplamPomodoroDakikasi.ToString());
                     }
@@ -110,7 +120,7 @@ namespace PomodoroTimer
                             ", Pomodoro Sayısı: " + gecmis.PomodoroSayisi.ToString() +
                             ", Kısa Mola Sayısı: " + gecmis.KisaMolaSayisi.ToString() +
                             ", Uzun Mola Sayısı: " + gecmis.UzunMolaSayisi.ToString() +
-                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() + " satırı hatalı.";
+                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() + " satırı hatalı";
 
                         MessageBox.Show(hataliSatir);
                         uygunluk = false;
@@ -119,12 +129,7 @@ namespace PomodoroTimer
                 }
                 else
                 {
-                    hataliSatir = "Id: " + gecmis.Id.ToString() +
-                            ", Tarih: " + gecmis.Tarih.ToString() +
-                            ", Pomodoro Sayısı: " + gecmis.PomodoroSayisi.ToString() +
-                            ", Kısa Mola Sayısı: " + gecmis.KisaMolaSayisi.ToString() +
-                            ", Uzun Mola Sayısı: " + gecmis.UzunMolaSayisi.ToString() +
-                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() + " satırı hatalı.";
+                    hataliSatir = "Satırlar boş olamaz";
 
                     MessageBox.Show(hataliSatir);
                     uygunluk = false;
@@ -134,7 +139,7 @@ namespace PomodoroTimer
 
             if (uygunluk)
             {
-                System.IO.File.WriteAllLines("PomodoroTimerDb.txt", tumListe);
+                System.IO.File.WriteAllLines(mainWindow.DbFileName, tumListe);
                 this.Close();
                 YenidenBaslat();
             }

@@ -29,7 +29,7 @@ namespace PomodoroTimer
         public int BirUzunMolaZamani { get; set; } = 15;
         private string Durum { get; set; }
         public string DbFileName { get; } = "PomodoroTimerDb.txt";
-        private string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
+        public string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
 
         public List<string> tarihListesi = new List<string>();
         public List<string> pomodoroSayisiListesi = new List<string>();
@@ -75,7 +75,7 @@ namespace PomodoroTimer
 
                     tumListe.Add(DateTime.Now.ToString("dd/MM/yyyy") + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString() + "," + GunlukToplamPomodoroDakikasi.ToString());
 
-                    System.IO.File.WriteAllLines("PomodoroTimerDb.txt", tumListe);
+                    System.IO.File.WriteAllLines(DbFileName, tumListe);
                     YenidenBaslat();
                 }
                 else
@@ -103,7 +103,7 @@ namespace PomodoroTimer
 
                 tumListe.Add(DateTime.Now.ToString("dd/MM/yyyy") + "," + PomodoroSayisi.ToString() + "," + KisaMolaSayisi.ToString() + "," + UzunMolaSayisi.ToString() + "," + GunlukToplamPomodoroDakikasi.ToString());
 
-                System.IO.File.WriteAllLines("PomodoroTimerDb.txt", tumListe);
+                System.IO.File.WriteAllLines(DbFileName, tumListe);
                 YenidenBaslat();
             }
         }
@@ -125,7 +125,7 @@ namespace PomodoroTimer
             }
             else
             {
-                System.IO.File.WriteAllText("PomodoroTimerSettings.txt", BirPomodoroZamani.ToString() + "," +
+                System.IO.File.WriteAllText(SettingsFileName, BirPomodoroZamani.ToString() + "," +
                     BirKisaMolaZamani.ToString() + "," +
                     BirUzunMolaZamani.ToString());
                 YenidenBaslat();
@@ -171,7 +171,7 @@ namespace PomodoroTimer
 
             if (tarihListesi.Count > 0 && pomodoroSayisiListesi.Count > 0)
             {
-                System.IO.File.WriteAllLines("PomodoroTimerDb.txt", tumListe);
+                System.IO.File.WriteAllLines(DbFileName, tumListe);
             }
         }
 
