@@ -38,11 +38,11 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="0">
-                    <Label Content="Pomodoro Süresi: (Dakika)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Pomodoro Süresi (Dakika):" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxPomodoroSuresi" FontSize="15" Width="80" Background="GhostWhite" Margin="20" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Kısa Mola Süresi: (Dakika)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Kısa Mola Süresi (Dakika):" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxKisaMolaSuresi" FontSize="15" Width="80" Background="GhostWhite" Margin="20" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                    <Label Content="Uzun Mola Süresi: (Dakika)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
+                    <Label Content="Uzun Mola Süresi (Dakika):" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontFamily="Segoe UI" FontWeight="Bold"></Label>
                     <TextBox x:Name="tbxUzunMolaSuresi" FontSize="15" Width="80" Background="GhostWhite" Margin="20" PreviewTextInput="NumberValidationTextBox"></TextBox>
                 </StackPanel>
             </Grid>

@@ -81,6 +81,7 @@ namespace PomodoroTimer
         private static string pattern = "^(?:[012]?[0-9]|3[01])[.](?:0?[1-9]|1[0-2])[.](?:[0-9]{2}){1,2}$";
         private Regex regex = new Regex(pattern);
         private bool uygunluk = true;
+        private string hataliSatir = "";
 
         private void YenidenBaslat()
         {
@@ -104,14 +105,28 @@ namespace PomodoroTimer
                     }
                     else
                     {
-                        MessageBox.Show("Hata");
+                        hataliSatir = "Id: " + gecmis.Id.ToString() +
+                            ", Tarih: " + gecmis.Tarih.ToString() +
+                            ", Pomodoro Sayısı: " + gecmis.PomodoroSayisi.ToString() +
+                            ", Kısa Mola Sayısı: " + gecmis.KisaMolaSayisi.ToString() +
+                            ", Uzun Mola Sayısı: " + gecmis.UzunMolaSayisi.ToString() +
+                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() + " satırı hatalı.";
+
+                        MessageBox.Show(hataliSatir);
                         uygunluk = false;
                         break;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Hata");
+                    hataliSatir = "Id: " + gecmis.Id.ToString() +
+                            ", Tarih: " + gecmis.Tarih.ToString() +
+                            ", Pomodoro Sayısı: " + gecmis.PomodoroSayisi.ToString() +
+                            ", Kısa Mola Sayısı: " + gecmis.KisaMolaSayisi.ToString() +
+                            ", Uzun Mola Sayısı: " + gecmis.UzunMolaSayisi.ToString() +
+                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() + " satırı hatalı.";
+
+                    MessageBox.Show(hataliSatir);
                     uygunluk = false;
                     break;
                 }
