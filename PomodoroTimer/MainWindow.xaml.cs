@@ -14,7 +14,6 @@ namespace PomodoroTimer
         public MainWindow()
         {
             InitializeComponent();
-            this.ResizeMode = System.Windows.ResizeMode.CanMinimize;
             IlkAyarlar();
         }
 
@@ -27,6 +26,8 @@ namespace PomodoroTimer
         public int BirPomodoroZamani { get; set; } = 25;
         public int BirKisaMolaZamani { get; set; } = 5;
         public int BirUzunMolaZamani { get; set; } = 15;
+        public double PTHeight { get; set; } = 500;
+        public double PTWidth { get; set; } = 350;
         private string Durum { get; set; }
         public string DbFileName { get; } = "PomodoroTimerDb.txt";
         public string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
@@ -90,7 +91,7 @@ namespace PomodoroTimer
                     btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";
 
                     GunlukToplamPomodoroDakikasi = Convert.ToInt32(GunlukToplamPomodoroDakikaListesi[GunlukToplamPomodoroDakikaListesi.Count - 1]);
-                    lblToplamPomodoro.Content = "Toplam Pomodoro Dakikası: " + GunlukToplamPomodoroDakikasi;
+                    lblToplamPomodoro.Content = "Toplam Pomodoro: " + GunlukToplamPomodoroDakikasi;
                 }
             }
             else
@@ -121,13 +122,21 @@ namespace PomodoroTimer
                     BirPomodoroZamani = Convert.ToInt32(stringDizi[0]);
                     BirKisaMolaZamani = Convert.ToInt32(stringDizi[1]);
                     BirUzunMolaZamani = Convert.ToInt32(stringDizi[2]);
+                    PTHeight = Convert.ToInt32(stringDizi[3]);
+                    PTWidth = Convert.ToInt32(stringDizi[4]);
+                    Application.Current.MainWindow.Height = PTHeight;
+                    Application.Current.MainWindow.Width = PTWidth;
                 }
             }
             else
             {
-                System.IO.File.WriteAllText(SettingsFileName, BirPomodoroZamani.ToString() + "," +
+                System.IO.File.WriteAllText(SettingsFileName,
+                    BirPomodoroZamani.ToString() + "," +
                     BirKisaMolaZamani.ToString() + "," +
-                    BirUzunMolaZamani.ToString());
+                    BirUzunMolaZamani.ToString() + "," +
+                    PTHeight.ToString() + "," +
+                    PTWidth.ToString());
+
                 YenidenBaslat();
             }
         }
@@ -159,7 +168,7 @@ namespace PomodoroTimer
             {
                 case "Pomodoro":
                     GunlukToplamPomodoroDakikasi += BirPomodoroZamani;
-                    lblToplamPomodoro.Content = "Toplam Pomodoro Dakikası: " + GunlukToplamPomodoroDakikasi;
+                    lblToplamPomodoro.Content = "Toplam Pomodoro: " + GunlukToplamPomodoroDakikasi;
                     break;
             }
 
@@ -372,11 +381,25 @@ namespace PomodoroTimer
                 MessageBoxResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
+                    System.IO.File.WriteAllText(SettingsFileName,
+                    BirPomodoroZamani.ToString() + "," +
+                    BirKisaMolaZamani.ToString() + "," +
+                    BirUzunMolaZamani.ToString() + "," +
+                    PTHeight.ToString() + "," +
+                    PTWidth.ToString());
+
                     System.Windows.Application.Current.Shutdown();
                 }
             }
             else
             {
+                System.IO.File.WriteAllText(SettingsFileName,
+                    BirPomodoroZamani.ToString() + "," +
+                    BirKisaMolaZamani.ToString() + "," +
+                    BirUzunMolaZamani.ToString() + "," +
+                    PTHeight.ToString() + "," +
+                    PTWidth.ToString());
+
                 System.Windows.Application.Current.Shutdown();
             }
         }
@@ -440,6 +463,12 @@ namespace PomodoroTimer
             {
                 MessageBox.Show("Geçmişi açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
             }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            PTHeight = Application.Current.MainWindow.Height;
+            PTWidth = Application.Current.MainWindow.Width;
         }
     }
 }

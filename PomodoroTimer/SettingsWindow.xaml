@@ -5,14 +5,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Ayarlar" Height="400" Width="350" MinHeight="400" MinWidth="350" MaxHeight="400" MaxWidth="350">
+        Title="Ayarlar" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" Background="SaddleBrown">
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Green" />
+            <Setter Property="Background" Value="SaddleBrown" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="DarkOliveGreen" BorderThickness="1">
+
+                        <Border Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
@@ -20,13 +21,20 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="Red" />
                 </Trigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+        CaptionHeight="1"
+        CornerRadius ="0"
+        ResizeBorderThickness="4"
+        GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
     <Border BorderBrush="Black" BorderThickness="1">
-        <Grid Background="DarkOliveGreen">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -52,8 +60,8 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" FontSize="25" Click="btnIptal_Click" Background="DarkOliveGreen"></Button>
-                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" FontSize="25" Click="btnKaydet_Click" Background="DarkOliveGreen"></Button>
+                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" FontSize="25" Click="btnIptal_Click" ></Button>
+                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" FontSize="25" Click="btnKaydet_Click" ></Button>
             </Grid>
         </Grid>
     </Border>

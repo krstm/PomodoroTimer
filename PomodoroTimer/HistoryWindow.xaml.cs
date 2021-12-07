@@ -28,11 +28,13 @@ namespace PomodoroTimer
 
         public class ColumnNameAttribute : System.Attribute
         {
-            public ColumnNameAttribute(string Name) { this.Name = Name; }
+            public ColumnNameAttribute(string Name)
+            { this.Name = Name; }
+
             public string Name { get; set; }
         }
 
-        void dgPrimaryGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        private void dgPrimaryGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
             var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
@@ -46,24 +48,28 @@ namespace PomodoroTimer
         {
             [ColumnName("Sıra")]
             public string Id { get; set; }
+
             public string Tarih { get; set; }
+
             [ColumnName("Pomodoro Sayısı")]
             public string PomodoroSayisi { get; set; }
+
             [ColumnName("Kısa Mola Sayısı")]
             public string KisaMolaSayisi { get; set; }
+
             [ColumnName("Uzun Mola Sayısı")]
             public string UzunMolaSayisi { get; set; }
+
             [ColumnName("Toplam Pomodoro Dakikası")]
             public string ToplamPomodoroDakikasi { get; set; }
         }
 
         private List<Gecmis> gecmisList = new List<Gecmis>();
 
-        MainWindow mainWindow = new MainWindow();
+        private MainWindow mainWindow = new MainWindow();
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
-
             if (File.Exists(mainWindow.DbFileName))
             {
                 dataGridTablo.AutoGeneratingColumn += dgPrimaryGrid_AutoGeneratingColumn;
@@ -130,10 +136,10 @@ namespace PomodoroTimer
                     !(string.IsNullOrEmpty(gecmis.UzunMolaSayisi.ToString())) &&
                     !(string.IsNullOrEmpty(gecmis.ToplamPomodoroDakikasi.ToString())))
                 {
-                    if (regex.IsMatch(gecmis.Tarih) && 
-                        Int32.TryParse(gecmis.Id, out int value1) && 
-                        Int32.TryParse(gecmis.PomodoroSayisi, out int value2) && 
-                        Int32.TryParse(gecmis.KisaMolaSayisi, out int value3) && 
+                    if (regex.IsMatch(gecmis.Tarih) &&
+                        Int32.TryParse(gecmis.Id, out int value1) &&
+                        Int32.TryParse(gecmis.PomodoroSayisi, out int value2) &&
+                        Int32.TryParse(gecmis.KisaMolaSayisi, out int value3) &&
                         Int32.TryParse(gecmis.UzunMolaSayisi, out int value4))
                     {
                         tumListe.Add(gecmis.Tarih.ToString() + "," + gecmis.PomodoroSayisi.ToString() + "," + gecmis.KisaMolaSayisi.ToString() + "," + gecmis.UzunMolaSayisi.ToString() + "," + gecmis.ToplamPomodoroDakikasi.ToString());
