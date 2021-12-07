@@ -26,8 +26,8 @@ namespace PomodoroTimer
         public int BirPomodoroZamani { get; set; } = 25;
         public int BirKisaMolaZamani { get; set; } = 5;
         public int BirUzunMolaZamani { get; set; } = 15;
-        public double PTHeight { get; set; } = 500;
-        public double PTWidth { get; set; } = 350;
+        public int PTHeight { get; set; } = 500;
+        public int PTWidth { get; set; } = 350;
         private string Durum { get; set; }
         public string DbFileName { get; } = "PomodoroTimerDb.txt";
         public string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
@@ -124,6 +124,7 @@ namespace PomodoroTimer
                     BirUzunMolaZamani = Convert.ToInt32(stringDizi[2]);
                     PTHeight = Convert.ToInt32(stringDizi[3]);
                     PTWidth = Convert.ToInt32(stringDizi[4]);
+
                     Application.Current.MainWindow.Height = PTHeight;
                     Application.Current.MainWindow.Width = PTWidth;
                 }
@@ -376,30 +377,23 @@ namespace PomodoroTimer
 
         private void Kapat()
         {
+            System.IO.File.WriteAllText(SettingsFileName,
+                    BirPomodoroZamani.ToString() + "," +
+                    BirKisaMolaZamani.ToString() + "," +
+                    BirUzunMolaZamani.ToString() + "," +
+                    PTHeight.ToString() + "," +
+                    PTWidth.ToString());
+
             if (Saniye > 0)
             {
                 MessageBoxResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    System.IO.File.WriteAllText(SettingsFileName,
-                    BirPomodoroZamani.ToString() + "," +
-                    BirKisaMolaZamani.ToString() + "," +
-                    BirUzunMolaZamani.ToString() + "," +
-                    PTHeight.ToString() + "," +
-                    PTWidth.ToString());
-
                     System.Windows.Application.Current.Shutdown();
                 }
             }
             else
             {
-                System.IO.File.WriteAllText(SettingsFileName,
-                    BirPomodoroZamani.ToString() + "," +
-                    BirKisaMolaZamani.ToString() + "," +
-                    BirUzunMolaZamani.ToString() + "," +
-                    PTHeight.ToString() + "," +
-                    PTWidth.ToString());
-
                 System.Windows.Application.Current.Shutdown();
             }
         }
@@ -467,8 +461,8 @@ namespace PomodoroTimer
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            PTHeight = Application.Current.MainWindow.Height;
-            PTWidth = Application.Current.MainWindow.Width;
+            PTHeight = (int)Application.Current.MainWindow.Height;
+            PTWidth = (int)Application.Current.MainWindow.Width;
         }
     }
 }
