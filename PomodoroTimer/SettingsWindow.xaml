@@ -52,8 +52,8 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="25" Click="btnIptal_Click" Background="DarkOliveGreen"></Button>
-                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" FontSize="25" Click="btnKaydet_Click" Background="DarkOliveGreen"></Button>
+                <Button Grid.Column="0" x:Name="btnIptal" Content="İptal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" FontSize="25" Click="btnIptal_Click" Background="DarkOliveGreen"></Button>
+                <Button Grid.Column="1" x:Name="btnKaydet" Content="Kaydet" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" FontSize="25" Click="btnKaydet_Click" Background="DarkOliveGreen"></Button>
             </Grid>
         </Grid>
     </Border>
