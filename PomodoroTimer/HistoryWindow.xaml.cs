@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PomodoroTimer
@@ -24,13 +26,34 @@ namespace PomodoroTimer
                 this.DragMove();
         }
 
+        public class ColumnNameAttribute : System.Attribute
+        {
+            public ColumnNameAttribute(string Name) { this.Name = Name; }
+            public string Name { get; set; }
+        }
+
+        void dgPrimaryGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+            }
+        }
+
         private class Gecmis
         {
+            [ColumnName("Sıra")]
             public string Id { get; set; }
             public string Tarih { get; set; }
+            [ColumnName("Pomodoro Sayısı")]
             public string PomodoroSayisi { get; set; }
+            [ColumnName("Kısa Mola Sayısı")]
             public string KisaMolaSayisi { get; set; }
+            [ColumnName("Uzun Mola Sayısı")]
             public string UzunMolaSayisi { get; set; }
+            [ColumnName("Toplam Pomodoro Dakikası")]
             public string ToplamPomodoroDakikasi { get; set; }
         }
 
@@ -43,6 +66,8 @@ namespace PomodoroTimer
 
             if (File.Exists(mainWindow.DbFileName))
             {
+                dataGridTablo.AutoGeneratingColumn += dgPrimaryGrid_AutoGeneratingColumn;
+
                 var tumSatirlar = File.ReadAllLines(mainWindow.DbFileName);
                 List<string> satirlar = new List<string>(tumSatirlar);
                 int i = 1;
