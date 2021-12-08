@@ -40,25 +40,49 @@
             <RowDefinition Height="17*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label x:Name="lblSure" Content="00:00" FontSize="120" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-            <Button x:Name="btnPomodoro" Content="Pomodoro (0)" Height="70" FontSize="40" Foreground="Black"  Click="btnPomodoro_Click"></Button>
-            <Button x:Name="btnShortBreak" Height="50" Content="Kısa Mola (0)" FontSize="30" Foreground="Black"  Click="btnShortBreak_Click" ></Button>
-            <Button x:Name="btnLongBreak" Height="50" Content="Uzun Mola (0)" FontSize="30" Foreground="Black"  Click="btnLongBreak_Click"  ></Button>
-            <Button x:Name="btnStop" Height="50" Content="Dur" FontSize="30" Foreground="Black"  Click="btnStop_Click"></Button>
-            <Button x:Name="btnCancel" Height="50" Content="İptal" FontSize="20" Foreground="Black"  Visibility="Hidden"   Click="btnCancel_Click"></Button>
-        </StackPanel>
+        <Grid Grid.Row="0">
+            <Viewbox Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Right" Margin="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
+                    <Label x:Name="lblToplamPomodoro" Content="Toplam Pomodoro: 0" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" Margin="0,0,15,0">
+                    </Label>
+                    <Button x:Name="btnMinimize" Content="-" Height="30"  FontSize="20" Foreground="Black"  Click="btnMinimize_Click" Margin="0,0,15,0"></Button>
+                    <Button x:Name="btnExit" Content="X" Height="30"  FontSize="15" Foreground="Black"  Click="btnExit_Click" Margin="0,0,5,0"></Button>
+                </StackPanel>
+            </Viewbox>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
-            <Label x:Name="lblToplamPomodoro" Content="Toplam Pomodoro: 0" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" Margin="0,0,15,0">
-            </Label>
-            <Button x:Name="btnMinimize" Content="-" Height="30"  FontSize="20" Foreground="Black"  Click="btnMinimize_Click" Margin="0,0,15,0"></Button>
-            <Button x:Name="btnExit" Content="X" Height="30"  FontSize="15" Foreground="Black"  Click="btnExit_Click" Margin="0,0,5,0"></Button>
-        </StackPanel>
+            <Viewbox Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Left" Margin="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                    <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" FontWeight="Bold" Click="btnAyarlar_Click" Margin="5,0,0,0"></Button>
+                    <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" FontWeight="Bold" Foreground="Black"  VerticalContentAlignment="Center" Click="btnGecmis_Click" Margin="10,0,0,0"></Button>
+                </StackPanel>
+            </Viewbox>
+        </Grid>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
-            <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" FontWeight="Bold" Click="btnAyarlar_Click" Margin="5,0,0,0"></Button>
-            <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" FontWeight="Bold" Foreground="Black"  VerticalContentAlignment="Center" Click="btnGecmis_Click" Margin="10,0,0,0"></Button>
-        </StackPanel>
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Viewbox Grid.Row="0" Stretch="Uniform" Margin="20">
+                <Grid Grid.Row="0">
+                    <Label x:Name="lblSure" Content="00:00" FontSize="120" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                </Grid>
+            </Viewbox>
+
+            <Viewbox Grid.Row="1" Stretch="Uniform" Margin="10">
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                        <Button x:Name="btnPomodoro" Content="Pomodoro (0)" Height="70" FontSize="40" Foreground="Black"  Click="btnPomodoro_Click"></Button>
+                        <Button x:Name="btnShortBreak" Height="50" Content="Kısa Mola (0)" FontSize="30" Foreground="Black"  Click="btnShortBreak_Click" ></Button>
+                        <Button x:Name="btnLongBreak" Height="50" Content="Uzun Mola (0)" FontSize="30" Foreground="Black"  Click="btnLongBreak_Click"  ></Button>
+                        <Button x:Name="btnStop" Height="50" Content="Dur" FontSize="30" Foreground="Black"  Click="btnStop_Click"></Button>
+                        <Button x:Name="btnCancel" Height="50" Content="İptal" FontSize="20" Foreground="Black"  Visibility="Hidden"   Click="btnCancel_Click"></Button>
+                    </StackPanel>
+                </Grid>
+            </Viewbox>
+        </Grid>
     </Grid>
 </Window>

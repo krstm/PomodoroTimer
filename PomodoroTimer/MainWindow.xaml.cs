@@ -377,13 +377,6 @@ namespace PomodoroTimer
 
         private void Kapat()
         {
-            System.IO.File.WriteAllText(SettingsFileName,
-                    BirPomodoroZamani.ToString() + "," +
-                    BirKisaMolaZamani.ToString() + "," +
-                    BirUzunMolaZamani.ToString() + "," +
-                    PTHeight.ToString() + "," +
-                    PTWidth.ToString());
-
             if (Saniye > 0)
             {
                 MessageBoxResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -463,6 +456,17 @@ namespace PomodoroTimer
         {
             PTHeight = (int)Application.Current.MainWindow.Height;
             PTWidth = (int)Application.Current.MainWindow.Width;
+            EkranAyarlariniKaydet();
+        }
+
+        private void EkranAyarlariniKaydet()
+        {
+            System.IO.File.WriteAllText(SettingsFileName,
+                    BirPomodoroZamani.ToString() + "," +
+                    BirKisaMolaZamani.ToString() + "," +
+                    BirUzunMolaZamani.ToString() + "," +
+                    PTHeight.ToString() + "," +
+                    PTWidth.ToString());
         }
     }
 }
