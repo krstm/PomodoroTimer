@@ -57,8 +57,8 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
-            <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" Click="btnAyarlar_Click" Margin="5,0,0,0"></Button>
-            <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" Click="btnGecmis_Click" Margin="10,0,0,0"></Button>
+            <Button x:Name="btnAyarlar" Content="Ayarlar" Height="30"  FontSize="15" Foreground="Black"  VerticalContentAlignment="Center" FontWeight="Bold" Click="btnAyarlar_Click" Margin="5,0,0,0"></Button>
+            <Button x:Name="btnGecmis" Content="Geçmiş" Height="30"  FontSize="15" FontWeight="Bold" Foreground="Black"  VerticalContentAlignment="Center" Click="btnGecmis_Click" Margin="10,0,0,0"></Button>
         </StackPanel>
     </Grid>
 </Window>
