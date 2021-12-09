@@ -105,6 +105,7 @@ namespace PomodoroTimer
 
         private void btnKapat_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.gecmisPenceresiAcikMi = false;
             this.Close();
         }
 
@@ -171,6 +172,9 @@ namespace PomodoroTimer
             if (uygunluk)
             {
                 System.IO.File.WriteAllLines(mainWindow.DbFileName, tumListe);
+
+                MainWindow.gecmisPenceresiAcikMi = false;
+
                 this.Close();
                 YenidenBaslat();
             }

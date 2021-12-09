@@ -32,6 +32,9 @@ namespace PomodoroTimer
         public string DbFileName { get; } = "PomodoroTimerDb.txt";
         public string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
 
+        public static bool ayarlarPenceresiAcikMi = false;
+        public static bool gecmisPenceresiAcikMi = false;
+
         public List<string> tarihListesi = new List<string>();
         public List<string> pomodoroSayisiListesi = new List<string>();
         public List<string> kisaMolaSayisiListesi = new List<string>();
@@ -428,27 +431,45 @@ namespace PomodoroTimer
 
         private void btnAyarlar_Click(object sender, RoutedEventArgs e)
         {
-            if (Saniye < 1)
+            if (!ayarlarPenceresiAcikMi)
             {
-                SettingsWindow settingsWindow = new SettingsWindow();
-                settingsWindow.Show();
+                ayarlarPenceresiAcikMi = true;
+
+                if (Saniye < 1)
+                {
+                    SettingsWindow settingsWindow = new SettingsWindow();
+                    settingsWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Ayarları açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
+                }
             }
             else
             {
-                MessageBox.Show("Ayarları açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
+                MessageBox.Show("Ayarlar zaten açık");
             }
         }
 
         private void btnGecmis_Click(object sender, RoutedEventArgs e)
         {
-            if (Saniye < 1)
+            if (!gecmisPenceresiAcikMi)
             {
-                HistoryWindow historyWindow = new HistoryWindow();
-                historyWindow.Show();
+                gecmisPenceresiAcikMi = true;
+
+                if (Saniye < 1)
+                {
+                    HistoryWindow historyWindow = new HistoryWindow();
+                    historyWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Geçmişi açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
+                }
             }
             else
             {
-                MessageBox.Show("Geçmişi açmak için " + Durum + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
+                MessageBox.Show("Geçmiş zaten açık");
             }
         }
 

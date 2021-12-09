@@ -37,40 +37,14 @@ namespace PomodoroTimer
                         mainWindow.BirPomodoroZamani = Convert.ToInt32(tbxPomodoroSuresi.Text);
                         mainWindow.BirUzunMolaZamani = Convert.ToInt32(tbxUzunMolaSuresi.Text);
 
-                        System.IO.File.WriteAllText(mainWindow.SettingsFileName, mainWindow.BirPomodoroZamani.ToString() + "," +
-                           mainWindow.BirKisaMolaZamani.ToString() + "," +
-                           mainWindow.BirUzunMolaZamani.ToString());
+                        System.IO.File.WriteAllText(mainWindow.SettingsFileName,
+                mainWindow.BirPomodoroZamani.ToString() + "," +
+                mainWindow.BirKisaMolaZamani.ToString() + "," +
+                mainWindow.BirUzunMolaZamani.ToString() + "," +
+                mainWindow.PTHeight.ToString() + "," +
+                mainWindow.PTWidth.ToString());
 
-                        if (mainWindow.pomodoroSayisiListesi.Count > 0)
-                        {
-                            mainWindow.pomodoroSayisiListesi.RemoveAt(mainWindow.pomodoroSayisiListesi.Count - 1);
-                            mainWindow.pomodoroSayisiListesi.Add(mainWindow.PomodoroSayisi.ToString());
-                        }
-                        if (mainWindow.kisaMolaSayisiListesi.Count > 0)
-                        {
-                            mainWindow.kisaMolaSayisiListesi.RemoveAt(mainWindow.kisaMolaSayisiListesi.Count - 1);
-                            mainWindow.kisaMolaSayisiListesi.Add(mainWindow.KisaMolaSayisi.ToString());
-                        }
-                        if (mainWindow.uzunMolaSayisiListesi.Count > 0)
-                        {
-                            mainWindow.pomodoroSayisiListesi.RemoveAt(mainWindow.pomodoroSayisiListesi.Count - 1);
-                            mainWindow.pomodoroSayisiListesi.Add(mainWindow.PomodoroSayisi.ToString());
-                        }
-                        if (mainWindow.GunlukToplamPomodoroDakikaListesi.Count > 0)
-                        {
-                            mainWindow.GunlukToplamPomodoroDakikaListesi.RemoveAt(mainWindow.GunlukToplamPomodoroDakikaListesi.Count - 1);
-                            mainWindow.GunlukToplamPomodoroDakikaListesi.Add(mainWindow.GunlukToplamPomodoroDakikasi.ToString());
-                        }
-                        if (mainWindow.tumListe.Count > 0)
-                        {
-                            mainWindow.tumListe.RemoveAt(mainWindow.tumListe.Count - 1);
-                            mainWindow.tumListe.Add(mainWindow.tarihListesi[mainWindow.tarihListesi.Count - 1] + "," + mainWindow.PomodoroSayisi.ToString() + "," + mainWindow.KisaMolaSayisi.ToString() + "," + mainWindow.UzunMolaSayisi.ToString() + "," + mainWindow.GunlukToplamPomodoroDakikasi.ToString());
-                        }
-
-                        if (mainWindow.tarihListesi.Count > 0 && mainWindow.pomodoroSayisiListesi.Count > 0)
-                        {
-                            System.IO.File.WriteAllLines(mainWindow.DbFileName, mainWindow.tumListe);
-                        }
+                        MainWindow.ayarlarPenceresiAcikMi = false;
 
                         this.Close();
                         YenidenBaslat();
@@ -114,6 +88,7 @@ namespace PomodoroTimer
 
         private void btnIptal_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.ayarlarPenceresiAcikMi = false;
             this.Close();
         }
     }
