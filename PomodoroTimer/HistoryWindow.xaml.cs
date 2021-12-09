@@ -218,6 +218,8 @@ namespace PomodoroTimer
                 }
             }
 
+            eklenenTarihListesi.Clear();
+
             if (uygunluk)
             {
                 System.IO.File.WriteAllLines(MainWindow.DbFileName, tumListe);
