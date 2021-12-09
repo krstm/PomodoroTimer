@@ -150,6 +150,9 @@ namespace PomodoroTimer
 
         private void btnKaydet_Click(object sender, RoutedEventArgs e)
         {
+            eklenenTarihListesi.Clear();
+            tumListe.Clear();
+
             this.dataGridTablo.ItemsSource = gecmisList;
             uygunluk = true;
 
@@ -217,8 +220,6 @@ namespace PomodoroTimer
                     break;
                 }
             }
-
-            eklenenTarihListesi.Clear();
 
             if (uygunluk)
             {
