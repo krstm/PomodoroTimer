@@ -23,14 +23,14 @@ namespace PomodoroTimer
         public int KisaMolaSayisi { get; set; }
         public int UzunMolaSayisi { get; set; }
         private int BirDakika { get; } = 60;
-        public int BirPomodoroZamani { get; set; } = 25;
-        public int BirKisaMolaZamani { get; set; } = 5;
-        public int BirUzunMolaZamani { get; set; } = 15;
-        public int PTHeight { get; set; } = 500;
-        public int PTWidth { get; set; } = 350;
+        public static int BirPomodoroZamani { get; set; } = 25;
+        public static int BirKisaMolaZamani { get; set; } = 5;
+        public static int BirUzunMolaZamani { get; set; } = 15;
+        public static int PTHeight { get; set; } = 500;
+        public static int PTWidth { get; set; } = 350;
         private string Durum { get; set; }
-        public string DbFileName { get; } = "PomodoroTimerDb.txt";
-        public string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
+        public static string DbFileName { get; } = "PomodoroTimerDb.txt";
+        public static string SettingsFileName { get; } = "PomodoroTimerSettings.txt";
 
         public static bool ayarlarPenceresiAcikMi = false;
         public static bool gecmisPenceresiAcikMi = false;
@@ -40,7 +40,7 @@ namespace PomodoroTimer
         public List<string> kisaMolaSayisiListesi = new List<string>();
         public List<string> uzunMolaSayisiListesi = new List<string>();
         public List<string> tumListe = new List<string>();
-        public string[] stringDizi;
+        public static string[] stringDizi;
 
         public int GunlukToplamPomodoroDakikasi { get; set; } = 0;
         public List<string> GunlukToplamPomodoroDakikaListesi = new List<string>();
@@ -94,7 +94,7 @@ namespace PomodoroTimer
                     btnLongBreak.Content = "Uzun Mola (" + UzunMolaSayisi + ")";
 
                     GunlukToplamPomodoroDakikasi = Convert.ToInt32(GunlukToplamPomodoroDakikaListesi[GunlukToplamPomodoroDakikaListesi.Count - 1]);
-                    lblToplamPomodoro.Content = "Toplam Pomodoro: " + GunlukToplamPomodoroDakikasi;
+                    lblToplamPomodoro.Content = "T.P.D. : " + GunlukToplamPomodoroDakikasi;
                 }
             }
             else
@@ -172,7 +172,7 @@ namespace PomodoroTimer
             {
                 case "Pomodoro":
                     GunlukToplamPomodoroDakikasi += BirPomodoroZamani;
-                    lblToplamPomodoro.Content = "Toplam Pomodoro: " + GunlukToplamPomodoroDakikasi;
+                    lblToplamPomodoro.Content = "T.P.D. : " + GunlukToplamPomodoroDakikasi;
                     break;
             }
 
