@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PomodoroTimer.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -26,13 +27,6 @@ namespace PomodoroTimer
                 this.DragMove();
         }
 
-        public class ColumnNameAttribute : System.Attribute
-        {
-            public ColumnNameAttribute(string Name)
-            { this.Name = Name; }
-
-            public string Name { get; set; }
-        }
 
         private void dgPrimaryGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -68,43 +62,12 @@ namespace PomodoroTimer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(MainWindow.DbFileName))
-            {
-                dataGridTablo.AutoGeneratingColumn += dgPrimaryGrid_AutoGeneratingColumn;
-
-                var tumSatirlar = File.ReadAllLines(MainWindow.DbFileName);
-                List<string> satirlar = new List<string>(tumSatirlar);
-                int i = 1;
-                foreach (string satir in satirlar)
-                {
-                    MainWindow.stringDizi = satir.Split(',');
-
-                    gecmisList.Add(new Gecmis()
-                    {
-                        Id = i.ToString(),
-                        Tarih = MainWindow.stringDizi[0],
-                        PomodoroSayisi = MainWindow.stringDizi[1],
-                        KisaMolaSayisi = MainWindow.stringDizi[2],
-                        UzunMolaSayisi = MainWindow.stringDizi[3],
-                        ToplamPomodoroDakikasi = MainWindow.stringDizi[4]
-                    });
-
-                    i++;
-                }
-
-                dataGridTablo.ItemsSource = gecmisList;
-            }
-            else
-            {
-                MessageBox.Show("Veritabanı bulunamadı.");
-                this.Close();
-            }
+            
         }
 
         private void btnKapat_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.gecmisPenceresiAcikMi = false;
-            this.Close();
+            
         }
 
         private List<string> tumListe = new List<string>();
@@ -223,9 +186,9 @@ namespace PomodoroTimer
 
             if (uygunluk)
             {
-                System.IO.File.WriteAllLines(MainWindow.DbFileName, tumListe);
+                //System.IO.File.WriteAllLines(MainWindow.DbFileName, tumListe);
 
-                MainWindow.gecmisPenceresiAcikMi = false;
+                //MainWindow.gecmisPenceresiAcikMi = false;
 
                 this.Close();
                 YenidenBaslat();
