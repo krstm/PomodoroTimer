@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PomodoroTimer.Entities
 {
-    class History
+    internal class History
     {
         [ColumnName("Sıra")]
         public int Id { get; set; }
+
         [ColumnName("Tarih")]
         public string Tarih { get; set; }
+
         [ColumnName("Pomodoro Sayısı")]
         public int PomodoroSayisi { get; set; }
+
         [ColumnName("Kısa Mola Sayısı")]
         public int KisaMolaSayisi { get; set; }
+
         [ColumnName("Uzun Mola Sayısı")]
         public int UzunMolaSayisi { get; set; }
+
         [ColumnName("Toplam Pomodoro Dakikası")]
         public int ToplamPomodoroDakikasi { get; set; }
 

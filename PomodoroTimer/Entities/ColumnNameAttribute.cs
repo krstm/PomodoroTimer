@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PomodoroTimer.Entities
+﻿namespace PomodoroTimer.Entities
 {
-    class ColumnNameAttribute : System.Attribute
+    internal class ColumnNameAttribute : System.Attribute
     {
         public ColumnNameAttribute(string Name)
         { this.Name = Name; }

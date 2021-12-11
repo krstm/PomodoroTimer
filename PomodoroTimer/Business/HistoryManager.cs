@@ -13,9 +13,14 @@ namespace PomodoroTimer.Business
             return historyDal.ReadHistories();
         }
 
-        internal void SaveHistories(History history)
+        internal void SaveHistory(History history)
         {
-            historyDal.WriteHistories(history);
+            historyDal.WriteHistory(history);
+        }
+
+        internal void SaveHistories(List<History> historyList)
+        {
+            historyDal.WriteHistories(historyList);
         }
     }
 }

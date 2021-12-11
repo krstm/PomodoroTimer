@@ -1,9 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
 using PomodoroTimer.Business;
 using PomodoroTimer.Entities;
 using System;
 using System.Linq;
-using System.Media;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,26 +15,27 @@ namespace PomodoroTimer
             InitializeComponent();
         }
 
-        private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        public static System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
         private enum Durum
         {
             Pomodoro,
             KisaMola,
-            UzunMola
+            UzunMola,
+            Bos
         }
 
-        private static bool IsTheHistoryWindowOpen = false;
-        private static bool IsTheSettingsWindowOpen = false;
-        private static int Saniye { get; set; }
-        private static int Dakika { get; set; }
-        private static int PomodoroSayisi { get; set; }
-        private static int KisaMolaSayisi { get; set; }
-        private static int UzunMolaSayisi { get; set; }
-        private static int PomodoroSuresi { get; set; }
-        private static int KisaMolaSuresi { get; set; }
-        private static int UzunMolaSuresi { get; set; }
-        private static int ToplamPomodoroDakikasi { get; set; }
+        public static bool IsTheHistoryWindowOpen = false;
+        public static bool IsTheSettingsWindowOpen = false;
+        public static bool GecmisKapatilamaz = false;
+        public static int Saniye { get; set; }
+        public static int PomodoroSayisi { get; set; }
+        public static int KisaMolaSayisi { get; set; }
+        public static int UzunMolaSayisi { get; set; }
+        public static int PomodoroSuresi { get; set; }
+        public static int KisaMolaSuresi { get; set; }
+        public static int UzunMolaSuresi { get; set; }
+        public static int ToplamPomodoroDakikasi { get; set; }
 
         private static Durum durum;
 
@@ -46,12 +46,44 @@ namespace PomodoroTimer
                 dispatcherTimer.Stop();
                 ButonlariKilitle(true);
                 IptalButonuGorunurlugu(false);
+
+                Kaydet();
+                btnStop.Visibility = Visibility.Hidden;
                 BildirimCal();
+
+                durum = Durum.Bos;
+                BasliklariKalinlastir(durum);
             }
             else
             {
                 Saniye--;
                 lblSure.Content = DakikaString(Saniye) + ":" + SaniyeString(Saniye);
+            }
+        }
+
+        private void Kaydet()
+        {
+            History history = new History();
+            HistoryManager historyManager = new HistoryManager();
+
+            if (durum == Durum.Pomodoro)
+            {
+                ToplamPomodoroDakikasi += PomodoroSuresi;
+                UpdateContent();
+            }
+
+            history.Tarih = DateTime.Now.ToString("dd/MM/yyyy");
+            history.PomodoroSayisi = PomodoroSayisi;
+            history.KisaMolaSayisi = KisaMolaSayisi;
+            history.UzunMolaSayisi = UzunMolaSayisi;
+            history.ToplamPomodoroDakikasi = ToplamPomodoroDakikasi;
+
+            historyManager.SaveHistory(history);
+
+            if (IsTheHistoryWindowOpen)
+            {
+                GecmisKapatilamaz = true;
+                MessageBox.Show("Geçmiş veritabanına yeni kayıt yapıldı. Hata olmaması için Geçmiş penceresini kaydetmeden kapatmanız gerekmektedir");
             }
         }
 
@@ -66,6 +98,7 @@ namespace PomodoroTimer
             KisaMolaSuresi = settingManager.GetSettings().KisaMolaSuresi;
             UzunMolaSuresi = settingManager.GetSettings().UzunMolaSuresi;
             PomodoroSuresi = settingManager.GetSettings().PomodoroSuresi;
+
             Application.Current.MainWindow.Height = settingManager.GetSettings().Height;
             Application.Current.MainWindow.Width = settingManager.GetSettings().Width;
 
@@ -86,11 +119,8 @@ namespace PomodoroTimer
                 history.ToplamPomodoroDakikasi = 0;
                 history.Tarih = DateTime.Now.ToString("dd/MM/yyyy");
 
-                historyManager.SaveHistories(history);
+                historyManager.SaveHistory(history);
             }
-
-            Saniye = 60 * PomodoroSuresi;
-            lblSure.Content = DakikaString(Saniye) + ":" + SaniyeString(Saniye);
 
             UpdateContent();
         }
@@ -125,6 +155,7 @@ namespace PomodoroTimer
             IptalButonuGorunurlugu(true);
             Saniye = saniye;
             durum = _durum;
+            BasliklariKalinlastir(durum);
 
             switch (durum)
             {
@@ -200,6 +231,8 @@ namespace PomodoroTimer
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
+            EkranBoyutunuKaydet();
+
             if (Saniye > 0)
             {
                 MessageBoxResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -216,31 +249,38 @@ namespace PomodoroTimer
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (Saniye > 0)
+            MessageBoxResult result = MessageBox.Show("İptal etmek istediğinize emin misiniz?", "İptal", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                dispatcherTimer.Stop();
-                lblSure.Content = "00:00";
-                Saniye = 0;
-                btnStop.Content = "Dur";
-                ButonlariKilitle(true);
-                IptalButonuGorunurlugu(false);
-
-                switch (durum)
+                if (Saniye > 0)
                 {
-                    case Durum.Pomodoro:
-                        PomodoroSayisi--;
-                        UpdateContent();
-                        break;
+                    dispatcherTimer.Stop();
+                    lblSure.Content = "00:00";
+                    Saniye = 0;
+                    btnStop.Content = "Dur";
 
-                    case Durum.KisaMola:
-                        KisaMolaSayisi--;
-                        UpdateContent();
-                        break;
+                    ButonlariKilitle(true);
+                    IptalButonuGorunurlugu(false);
 
-                    case Durum.UzunMola:
-                        UzunMolaSayisi--;
-                        UpdateContent();
-                        break;
+                    switch (durum)
+                    {
+                        case Durum.Pomodoro:
+                            PomodoroSayisi--;
+                            UpdateContent();
+                            break;
+
+                        case Durum.KisaMola:
+                            KisaMolaSayisi--;
+                            UpdateContent();
+                            break;
+
+                        case Durum.UzunMola:
+                            UzunMolaSayisi--;
+                            UpdateContent();
+                            break;
+                    }
+                    durum = Durum.Bos;
+                    BasliklariKalinlastir(durum);
                 }
             }
         }
@@ -250,15 +290,9 @@ namespace PomodoroTimer
             if (!IsTheSettingsWindowOpen)
             {
                 IsTheSettingsWindowOpen = true;
-                if (Saniye < 1)
-                {
-                    SettingsWindow settingsWindow = new SettingsWindow();
-                    settingsWindow.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Ayarları açmak için " + durum.ToString() + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
-                }
+
+                SettingsWindow settingsWindow = new SettingsWindow();
+                settingsWindow.Show();
             }
         }
 
@@ -267,27 +301,25 @@ namespace PomodoroTimer
             if (!IsTheHistoryWindowOpen)
             {
                 IsTheHistoryWindowOpen = true;
-                if (Saniye < 1)
-                {
-                    HistoryWindow historyWindow = new HistoryWindow();
-                    historyWindow.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Geçmişi açmak için " + durum.ToString() + " işlemini iptal etmeniz ya da bitirmeniz gerekmektedir.");
-                }
+
+                HistoryWindow historyWindow = new HistoryWindow();
+                historyWindow.Show();
             }
         }
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void EkranBoyutunuKaydet()
         {
-            //Setting settings = new Setting();
-            //SettingManager settingManager = new SettingManager();
-            //settings = settingManager.GetSettings();
-            //settings.Height = (int)Application.Current.MainWindow.Height;
-            //settings.Width = (int)Application.Current.MainWindow.Width;
+            if (Application.Current.MainWindow.Height >= 500 &&
+                Application.Current.MainWindow.Width >= 350)
+            {
+                Setting settings = new Setting();
+                SettingManager settingManager = new SettingManager();
+                settings = settingManager.GetSettings();
+                settings.Height = (int)Application.Current.MainWindow.Height;
+                settings.Width = (int)Application.Current.MainWindow.Width;
 
-            //settingManager.SaveSettings(settings);
+                settingManager.SaveSettings(settings);
+            }
         }
 
         private void ButonlariKilitle(bool durum)
@@ -311,27 +343,67 @@ namespace PomodoroTimer
 
         private void BildirimCal()
         {
-            bool found = false;
-            try
+            new ToastContentBuilder()
+                .AddArgument("action", "viewConversation")
+                .AddArgument("conversationId", 9813)
+                .AddText(DurumStr(durum) + " bitti")
+                .Show();
+        }
+
+        private string DurumStr(Durum _durum)
+        {
+            switch (_durum)
             {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"AppEvents\Schemes\Apps\.Default\Notification.Default\.Current"))
-                {
-                    if (key != null)
-                    {
-                        Object o = key.GetValue(null);
-                        if (o != null)
-                        {
-                            SoundPlayer theSound = new SoundPlayer((String)o);
-                            theSound.Play();
-                            found = true;
-                        }
-                    }
-                }
+                case Durum.Pomodoro:
+                    return "Pomodoro";
+                    break;
+
+                case Durum.KisaMola:
+                    return "Kısa Mola";
+                    break;
+
+                case Durum.UzunMola:
+                    return "Uzun Mola";
+                    break;
+
+                default:
+                    return "Hata";
+                    break;
             }
-            catch
-            { }
-            if (!found)
-                SystemSounds.Beep.Play();
+        }
+
+        private void BasliklariKalinlastir(Durum _durum)
+        {
+            switch (_durum)
+            {
+                case Durum.Pomodoro:
+                    btnPomodoro.FontWeight = FontWeights.Bold;
+                    btnShortBreak.FontWeight = FontWeights.ExtraLight;
+                    btnLongBreak.FontWeight = FontWeights.ExtraLight;
+                    btnStop.Visibility = Visibility.Visible;
+                    break;
+
+                case Durum.KisaMola:
+                    btnShortBreak.FontWeight = FontWeights.Bold;
+                    btnLongBreak.FontWeight = FontWeights.ExtraLight;
+                    btnPomodoro.FontWeight = FontWeights.ExtraLight;
+                    btnStop.Visibility = Visibility.Visible;
+                    break;
+
+                case Durum.UzunMola:
+                    btnLongBreak.FontWeight = FontWeights.Bold;
+                    btnShortBreak.FontWeight = FontWeights.ExtraLight;
+                    btnPomodoro.FontWeight = FontWeights.ExtraLight;
+                    btnStop.Visibility = Visibility.Visible;
+                    break;
+
+                default:
+                    btnPomodoro.FontWeight = FontWeights.Normal;
+                    btnLongBreak.FontWeight = FontWeights.Normal;
+                    btnShortBreak.FontWeight = FontWeights.Normal;
+                    btnStop.Visibility = Visibility.Hidden;
+                    break;
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using PomodoroTimer.Entities;
+﻿using PomodoroTimer.Business;
+using PomodoroTimer.DataAccess;
+using PomodoroTimer.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,6 @@ namespace PomodoroTimer
                 this.DragMove();
         }
 
-
         private void dgPrimaryGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
@@ -38,36 +38,10 @@ namespace PomodoroTimer
             }
         }
 
-        private class Gecmis
-        {
-            [ColumnName("Sıra")]
-            public string Id { get; set; }
-
-            public string Tarih { get; set; }
-
-            [ColumnName("Pomodoro Sayısı")]
-            public string PomodoroSayisi { get; set; }
-
-            [ColumnName("Kısa Mola Sayısı")]
-            public string KisaMolaSayisi { get; set; }
-
-            [ColumnName("Uzun Mola Sayısı")]
-            public string UzunMolaSayisi { get; set; }
-
-            [ColumnName("Toplam Pomodoro Dakikası")]
-            public string ToplamPomodoroDakikasi { get; set; }
-        }
-
-        private List<Gecmis> gecmisList = new List<Gecmis>();
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        private void btnKapat_Click(object sender, RoutedEventArgs e)
-        {
-            
+            HistoryManager historyManager = new HistoryManager();
+            dataGridTablo.ItemsSource = historyManager.GetHistories();
         }
 
         private List<string> tumListe = new List<string>();
@@ -76,13 +50,7 @@ namespace PomodoroTimer
         private Regex regex = new Regex(pattern);
         private bool uygunluk = true;
         private string hataliSatir = "";
-
-        private void YenidenBaslat()
-        {
-            var currentExecutablePath = Process.GetCurrentProcess().MainModule.FileName;
-            Process.Start(currentExecutablePath);
-            Application.Current.Shutdown();
-        }
+        private List<string> eklenenTarihListesi = new List<string>();
 
         private string[] regexDizi;
 
@@ -109,48 +77,68 @@ namespace PomodoroTimer
             return false;
         }
 
-        private List<string> eklenenTarihListesi = new List<string>();
-
         private void btnKaydet_Click(object sender, RoutedEventArgs e)
         {
             eklenenTarihListesi.Clear();
             tumListe.Clear();
-
-            this.dataGridTablo.ItemsSource = gecmisList;
+            HistoryManager historyManager = new HistoryManager();
             uygunluk = true;
 
-            foreach (Gecmis gecmis in gecmisList)
+            foreach (History history in dataGridTablo.ItemsSource)
             {
-                if (!(string.IsNullOrEmpty(gecmis.Id.ToString())) &&
-                    !(string.IsNullOrEmpty(gecmis.Tarih.ToString())) &&
-                    !(string.IsNullOrEmpty(gecmis.PomodoroSayisi.ToString())) &&
-                    !(string.IsNullOrEmpty(gecmis.KisaMolaSayisi.ToString())) &&
-                    !(string.IsNullOrEmpty(gecmis.UzunMolaSayisi.ToString())) &&
-                    !(string.IsNullOrEmpty(gecmis.ToplamPomodoroDakikasi.ToString())))
+                if (!MainWindow.GecmisKapatilamaz)
                 {
-                    if (RegexKontrol(gecmis.Tarih) &&
-                        Int32.TryParse(gecmis.Id, out int value1) &&
-                        Int32.TryParse(gecmis.PomodoroSayisi, out int value2) &&
-                        Int32.TryParse(gecmis.KisaMolaSayisi, out int value3) &&
-                        Int32.TryParse(gecmis.UzunMolaSayisi, out int value4))
+                    if (!(string.IsNullOrEmpty(history.Id.ToString())) &&
+                    !(string.IsNullOrEmpty(history.Tarih.ToString())) &&
+                    !(string.IsNullOrEmpty(history.PomodoroSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(history.KisaMolaSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(history.UzunMolaSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(history.ToplamPomodoroDakikasi.ToString())))
                     {
-                        if (!eklenenTarihListesi.Contains(gecmis.Tarih))
+                        if (RegexKontrol(history.Tarih) &&
+                            Int32.TryParse(history.Id.ToString(), out int value1) &&
+                            Int32.TryParse(history.PomodoroSayisi.ToString(), out int value2) &&
+                            Int32.TryParse(history.KisaMolaSayisi.ToString(), out int value3) &&
+                            Int32.TryParse(history.UzunMolaSayisi.ToString(), out int value4))
                         {
-                            eklenenTarihListesi.Add(gecmis.Tarih);
+                            if (!eklenenTarihListesi.Contains(history.Tarih))
+                            {
+                                eklenenTarihListesi.Add(history.Tarih);
 
-                            tumListe.Add(gecmis.Tarih.ToString() + "," + gecmis.PomodoroSayisi.ToString() + "," + gecmis.KisaMolaSayisi.ToString() + "," + gecmis.UzunMolaSayisi.ToString() + "," + gecmis.ToplamPomodoroDakikasi.ToString());
+                                tumListe.Add(history.Tarih.ToString() + "," +
+                                    history.PomodoroSayisi.ToString() + "," +
+                                    history.KisaMolaSayisi.ToString() + "," +
+                                    history.UzunMolaSayisi.ToString() + "," +
+                                    history.ToplamPomodoroDakikasi.ToString());
+                            }
+                            else
+                            {
+                                hataliSatir = "Sıra: " + history.Id.ToString() +
+                                ", Tarih: " + history.Tarih.ToString() +
+                                ", Pomodoro Sayısı: " + history.PomodoroSayisi.ToString() +
+                                ", Kısa Mola Sayısı: " + history.KisaMolaSayisi.ToString() +
+                                ", Uzun Mola Sayısı: " + history.UzunMolaSayisi.ToString() +
+                                ", Toplam Pomodoro Dakikası: " + history.ToplamPomodoroDakikasi.ToString() +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                "Aynı tarih birden fazla satırda olamaz";
+
+                                MessageBox.Show(hataliSatir);
+                                uygunluk = false;
+                                break;
+                            }
                         }
                         else
                         {
-                            hataliSatir = "Sıra: " + gecmis.Id.ToString() +
-                            ", Tarih: " + gecmis.Tarih.ToString() +
-                            ", Pomodoro Sayısı: " + gecmis.PomodoroSayisi.ToString() +
-                            ", Kısa Mola Sayısı: " + gecmis.KisaMolaSayisi.ToString() +
-                            ", Uzun Mola Sayısı: " + gecmis.UzunMolaSayisi.ToString() +
-                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() +
-                            Environment.NewLine +
-                            Environment.NewLine +
-                            "Aynı tarih birden fazla satırda olamaz";
+                            hataliSatir = "Sıra: " + history.Id.ToString() +
+                                ", Tarih: " + history.Tarih.ToString() +
+                                ", Pomodoro Sayısı: " + history.PomodoroSayisi.ToString() +
+                                ", Kısa Mola Sayısı: " + history.KisaMolaSayisi.ToString() +
+                                ", Uzun Mola Sayısı: " + history.UzunMolaSayisi.ToString() +
+                                ", Toplam Pomodoro Dakikası: " + history.ToplamPomodoroDakikasi.ToString() +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                "Satır hatalı";
 
                             MessageBox.Show(hataliSatir);
                             uygunluk = false;
@@ -159,15 +147,7 @@ namespace PomodoroTimer
                     }
                     else
                     {
-                        hataliSatir = "Sıra: " + gecmis.Id.ToString() +
-                            ", Tarih: " + gecmis.Tarih.ToString() +
-                            ", Pomodoro Sayısı: " + gecmis.PomodoroSayisi.ToString() +
-                            ", Kısa Mola Sayısı: " + gecmis.KisaMolaSayisi.ToString() +
-                            ", Uzun Mola Sayısı: " + gecmis.UzunMolaSayisi.ToString() +
-                            ", Toplam Pomodoro Dakikası: " + gecmis.ToplamPomodoroDakikasi.ToString() +
-                            Environment.NewLine +
-                            Environment.NewLine +
-                            "Satır hatalı";
+                        hataliSatir = "Satırlar boş olamaz";
 
                         MessageBox.Show(hataliSatir);
                         uygunluk = false;
@@ -176,7 +156,7 @@ namespace PomodoroTimer
                 }
                 else
                 {
-                    hataliSatir = "Satırlar boş olamaz";
+                    hataliSatir = "Veritabanı değişti. Geçmiş kaydedilemez.";
 
                     MessageBox.Show(hataliSatir);
                     uygunluk = false;
@@ -186,13 +166,22 @@ namespace PomodoroTimer
 
             if (uygunluk)
             {
-                //System.IO.File.WriteAllLines(MainWindow.DbFileName, tumListe);
+                System.IO.File.WriteAllLines(HistoryDal.HistoryDbFileName, tumListe);
 
-                //MainWindow.gecmisPenceresiAcikMi = false;
+                MainWindow.PomodoroSayisi = historyManager.GetHistories().Last().PomodoroSayisi;
+                MainWindow.KisaMolaSayisi = historyManager.GetHistories().Last().KisaMolaSayisi;
+                MainWindow.UzunMolaSayisi = historyManager.GetHistories().Last().UzunMolaSayisi;
 
+                MainWindow.IsTheHistoryWindowOpen = false;
                 this.Close();
-                YenidenBaslat();
             }
+        }
+
+        private void btnKapat_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.GecmisKapatilamaz = false;
+            MainWindow.IsTheHistoryWindowOpen = false;
+            this.Close();
         }
     }
 }

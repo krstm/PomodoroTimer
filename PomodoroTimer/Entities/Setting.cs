@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PomodoroTimer.Entities
+﻿namespace PomodoroTimer.Entities
 {
-    class Setting
+    internal class Setting
     {
         public int PomodoroSuresi { get; set; }
         public int KisaMolaSuresi { get; set; }

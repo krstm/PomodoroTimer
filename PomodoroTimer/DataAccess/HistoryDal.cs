@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PomodoroTimer.DataAccess
 {
@@ -10,9 +11,8 @@ namespace PomodoroTimer.DataAccess
         private History history = new History();
         private List<History> historyList = new List<History>();
         private string[] stringArray;
-        private static string HistoryDbFileName = "PomodoroTimerDb.txt";
+        internal static string HistoryDbFileName = "PomodoroTimerDb.txt";
         private int count = 1;
-
 
         public List<History> ReadHistories()
         {
@@ -46,14 +46,23 @@ namespace PomodoroTimer.DataAccess
             }
         }
 
-        public void WriteHistories(History history)
+        public void WriteHistory(History history)
         {
             List<History> histories = new List<History>();
             HistoryDal historyDal = new HistoryDal();
             List<string> allLines = new List<string>();
 
             histories = historyDal.ReadHistories();
-            histories.Add(history);
+
+            if (histories.Last().Tarih == DateTime.Now.ToString("dd/MM/yyyy"))
+            {
+                histories.Remove(histories.Last());
+                histories.Add(history);
+            }
+            else
+            {
+                histories.Add(history);
+            }
 
             foreach (History h in histories)
             {
@@ -66,6 +75,22 @@ namespace PomodoroTimer.DataAccess
             }
 
             System.IO.File.WriteAllLines(HistoryDbFileName, allLines);
+        }
+
+        public void WriteHistories(List<History> histories)
+        {
+            List<string> tumListe = new List<string>();
+
+            foreach (History history in histories)
+            {
+                tumListe.Add(history.Tarih.ToString() + "," +
+                                    history.PomodoroSayisi.ToString() + "," +
+                                    history.KisaMolaSayisi.ToString() + "," +
+                                    history.UzunMolaSayisi.ToString() + "," +
+                                    history.ToplamPomodoroDakikasi.ToString());
+            }
+
+            System.IO.File.WriteAllLines(HistoryDbFileName, tumListe);
         }
     }
 }
