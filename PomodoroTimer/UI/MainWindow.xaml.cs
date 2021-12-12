@@ -178,7 +178,7 @@ namespace PomodoroTimer
             dispatcherTimer.Start();
         }
 
-        private void UpdateContent()
+        public void UpdateContent()
         {
             btnPomodoro.Content = "Pomodoro (" + PomodoroSayisi + ")";
             btnShortBreak.Content = "Kısa Mola (" + KisaMolaSayisi + ")";
@@ -294,6 +294,10 @@ namespace PomodoroTimer
                 SettingsWindow settingsWindow = new SettingsWindow();
                 settingsWindow.Show();
             }
+            else
+            {
+                MessageBox.Show("Ayarlar penceresi zaten açık");
+            }
         }
 
         private void btnGecmis_Click(object sender, RoutedEventArgs e)
@@ -304,6 +308,10 @@ namespace PomodoroTimer
 
                 HistoryWindow historyWindow = new HistoryWindow();
                 historyWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Geçmiş penceresi zaten açık");
             }
         }
 

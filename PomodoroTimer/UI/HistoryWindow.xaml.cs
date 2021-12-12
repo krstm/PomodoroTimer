@@ -99,7 +99,8 @@ namespace PomodoroTimer
                             Int32.TryParse(history.Id.ToString(), out int value1) &&
                             Int32.TryParse(history.PomodoroSayisi.ToString(), out int value2) &&
                             Int32.TryParse(history.KisaMolaSayisi.ToString(), out int value3) &&
-                            Int32.TryParse(history.UzunMolaSayisi.ToString(), out int value4))
+                            Int32.TryParse(history.UzunMolaSayisi.ToString(), out int value4) &&
+                            Int32.TryParse(history.ToplamPomodoroDakikasi.ToString(), out int value5))
                         {
                             if (!eklenenTarihListesi.Contains(history.Tarih))
                             {
@@ -171,6 +172,7 @@ namespace PomodoroTimer
                 MainWindow.PomodoroSayisi = historyManager.GetHistories().Last().PomodoroSayisi;
                 MainWindow.KisaMolaSayisi = historyManager.GetHistories().Last().KisaMolaSayisi;
                 MainWindow.UzunMolaSayisi = historyManager.GetHistories().Last().UzunMolaSayisi;
+                MainWindow.ToplamPomodoroDakikasi = historyManager.GetHistories().Last().ToplamPomodoroDakikasi;
 
                 MainWindow.IsTheHistoryWindowOpen = false;
                 this.Close();
