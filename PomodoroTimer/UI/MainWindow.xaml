@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         Title="Pomodoro Timer" MinHeight="500" MinWidth="350" Background="SaddleBrown">
     <Window.Resources>
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="SaddleBrown" />
             <Setter Property="Template">
@@ -33,6 +34,10 @@
         GlassFrameThickness="0">
         </WindowChrome>
     </WindowChrome.WindowChrome>
+
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo />
+    </Window.TaskbarItemInfo>
 
     <Grid>
         <Grid.RowDefinitions>

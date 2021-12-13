@@ -1,8 +1,10 @@
-﻿using PomodoroTimer.Entities;
+﻿using PomodoroTimer.Business;
+using PomodoroTimer.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace PomodoroTimer.DataAccess
 {
@@ -77,20 +79,18 @@ namespace PomodoroTimer.DataAccess
             System.IO.File.WriteAllLines(HistoryDbFileName, allLines);
         }
 
-        public void WriteHistories(List<History> histories)
+        public void WriteHistories(DataGrid dataGrid, List<string> tumListe)
         {
-            List<string> tumListe = new List<string>();
+            HistoryManager historyManager = new HistoryManager();
 
-            foreach (History history in histories)
-            {
-                tumListe.Add(history.Tarih.ToString() + "," +
-                                    history.PomodoroSayisi.ToString() + "," +
-                                    history.KisaMolaSayisi.ToString() + "," +
-                                    history.UzunMolaSayisi.ToString() + "," +
-                                    history.ToplamPomodoroDakikasi.ToString());
-            }
+            System.IO.File.WriteAllLines(HistoryDal.HistoryDbFileName, tumListe);
 
-            System.IO.File.WriteAllLines(HistoryDbFileName, tumListe);
+            MainWindow.PomodoroSayisi = historyManager.GetHistories().Last().PomodoroSayisi;
+            MainWindow.KisaMolaSayisi = historyManager.GetHistories().Last().KisaMolaSayisi;
+            MainWindow.UzunMolaSayisi = historyManager.GetHistories().Last().UzunMolaSayisi;
+            MainWindow.ToplamPomodoroDakikasi = historyManager.GetHistories().Last().ToplamPomodoroDakikasi;
+
+            MainWindow.IsTheHistoryWindowOpen = false;
         }
     }
 }

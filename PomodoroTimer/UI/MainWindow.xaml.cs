@@ -13,6 +13,8 @@ namespace PomodoroTimer
         public MainWindow()
         {
             InitializeComponent();
+
+            TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
         }
 
         public static System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -53,11 +55,36 @@ namespace PomodoroTimer
 
                 durum = Durum.Bos;
                 BasliklariKalinlastir(durum);
+                TaskbarItemInfo.ProgressValue = 1;
             }
             else
             {
                 Saniye--;
                 lblSure.Content = DakikaString(Saniye) + ":" + SaniyeString(Saniye);
+
+                switch (durum)
+                {
+                    case Durum.Pomodoro:
+                        TaskbarItemInfo.ProgressValue = ((float)((((float)PomodoroSuresi * 60) -
+                            (float)Saniye) / ((float)PomodoroSuresi * 60)));
+                        break;
+
+                    case Durum.KisaMola:
+                        TaskbarItemInfo.ProgressValue = ((float)((((float)KisaMolaSuresi * 60) -
+                            (float)Saniye) / ((float)KisaMolaSuresi * 60)));
+                        break;
+
+                    case Durum.UzunMola:
+                        TaskbarItemInfo.ProgressValue = ((float)((((float)UzunMolaSuresi * 60) -
+                            (float)Saniye) / ((float)UzunMolaSuresi * 60)));
+                        break;
+
+                    case Durum.Bos:
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 
@@ -261,6 +288,7 @@ namespace PomodoroTimer
 
                     ButonlariKilitle(true);
                     IptalButonuGorunurlugu(false);
+                    TaskbarItemInfo.ProgressValue = 0;
 
                     switch (durum)
                     {
