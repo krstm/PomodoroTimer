@@ -25,42 +25,49 @@ namespace PomodoroTimer
 
         private void btnKaydet_Click(object sender, RoutedEventArgs e)
         {
-            if (Int32.TryParse(tbxKisaMolaSuresi.Text, out int value1) &&
+            if (MainWindow.Saniye <= 0)
+            {
+                if (Int32.TryParse(tbxKisaMolaSuresi.Text, out int value1) &&
             Int32.TryParse(tbxPomodoroSuresi.Text, out int value2) &&
             Int32.TryParse(tbxUzunMolaSuresi.Text, out int value3))
-            {
-                if (tbxKisaMolaSuresi.Text != string.Empty &&
-                    tbxPomodoroSuresi.Text != string.Empty &&
-                    tbxUzunMolaSuresi.Text != string.Empty)
                 {
-                    Setting settings = new Setting();
-                    SettingManager settingManager = new SettingManager();
-                    settings = settingManager.GetSettings();
+                    if (tbxKisaMolaSuresi.Text != string.Empty &&
+                        tbxPomodoroSuresi.Text != string.Empty &&
+                        tbxUzunMolaSuresi.Text != string.Empty)
+                    {
+                        Setting settings = new Setting();
+                        SettingManager settingManager = new SettingManager();
+                        settings = settingManager.GetSettings();
 
-                    settings.Height = (int)Application.Current.MainWindow.Height;
-                    settings.Width = (int)Application.Current.MainWindow.Width;
+                        settings.Height = (int)Application.Current.MainWindow.Height;
+                        settings.Width = (int)Application.Current.MainWindow.Width;
 
-                    settings.PomodoroSuresi = Convert.ToInt32(tbxPomodoroSuresi.Text);
-                    settings.KisaMolaSuresi = Convert.ToInt32(tbxKisaMolaSuresi.Text);
-                    settings.UzunMolaSuresi = Convert.ToInt32(tbxUzunMolaSuresi.Text);
+                        settings.PomodoroSuresi = Convert.ToInt32(tbxPomodoroSuresi.Text);
+                        settings.KisaMolaSuresi = Convert.ToInt32(tbxKisaMolaSuresi.Text);
+                        settings.UzunMolaSuresi = Convert.ToInt32(tbxUzunMolaSuresi.Text);
 
-                    settingManager.SaveSettings(settings);
+                        settingManager.SaveSettings(settings);
 
-                    MainWindow.PomodoroSuresi = settings.PomodoroSuresi;
-                    MainWindow.KisaMolaSuresi = settings.KisaMolaSuresi;
-                    MainWindow.UzunMolaSuresi = settings.UzunMolaSuresi;
+                        MainWindow.PomodoroSuresi = settings.PomodoroSuresi;
+                        MainWindow.KisaMolaSuresi = settings.KisaMolaSuresi;
+                        MainWindow.UzunMolaSuresi = settings.UzunMolaSuresi;
 
-                    MainWindow.IsTheSettingsWindowOpen = false;
-                    this.Close();
+                        MainWindow.IsTheSettingsWindowOpen = false;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Alanlar boş olamaz");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Alanlar boş olamaz");
+                    MessageBox.Show("Alanlara sayı girmelisiniz");
                 }
             }
             else
             {
-                MessageBox.Show("Alanlara sayı girmelisiniz");
+                MessageBox.Show("Program çalışırken ayarlar değiştirilemez");
             }
         }
 

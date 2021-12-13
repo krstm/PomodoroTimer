@@ -2,6 +2,7 @@
 using PomodoroTimer.Business;
 using PomodoroTimer.Entities;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -115,6 +116,13 @@ namespace PomodoroTimer
             }
         }
 
+        private void YenidenBaslat()
+        {
+            var currentExecutablePath = Process.GetCurrentProcess().MainModule.FileName;
+            Process.Start(currentExecutablePath);
+            Application.Current.Shutdown();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             VeritabanlariniKontrolEt();
@@ -125,31 +133,63 @@ namespace PomodoroTimer
             SettingManager settingManager = new SettingManager();
             HistoryManager historyManager = new HistoryManager();
 
-            KisaMolaSuresi = settingManager.GetSettings().KisaMolaSuresi;
-            UzunMolaSuresi = settingManager.GetSettings().UzunMolaSuresi;
-            PomodoroSuresi = settingManager.GetSettings().PomodoroSuresi;
-
-            Application.Current.MainWindow.Height = settingManager.GetSettings().Height;
-            Application.Current.MainWindow.Width = settingManager.GetSettings().Width;
-
-            if (historyManager.GetHistories().Last().Tarih == DateTime.Now.ToString("dd/MM/yyyy"))
+            try
             {
-                PomodoroSayisi = historyManager.GetHistories().Last().PomodoroSayisi;
-                KisaMolaSayisi = historyManager.GetHistories().Last().KisaMolaSayisi;
-                UzunMolaSayisi = historyManager.GetHistories().Last().UzunMolaSayisi;
-                ToplamPomodoroDakikasi = historyManager.GetHistories().Last().ToplamPomodoroDakikasi;
+                KisaMolaSuresi = settingManager.GetSettings().KisaMolaSuresi;
+                UzunMolaSuresi = settingManager.GetSettings().UzunMolaSuresi;
+                PomodoroSuresi = settingManager.GetSettings().PomodoroSuresi;
+
+                Application.Current.MainWindow.Height = settingManager.GetSettings().Height;
+                Application.Current.MainWindow.Width = settingManager.GetSettings().Width;
             }
-            else
+            catch (Exception)
             {
-                History history = new History();
+                MessageBoxResult result = MessageBox.Show("Ayarlar veritabanında hata oluştu. Veritabanı sıfırdan oluşturulsun mu?", "Ayarlar Veritabanında Hata", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    System.IO.File.WriteAllText("PomodoroTimerSettings.txt", "25,5,15,500,350");
+                    YenidenBaslat();
+                }
+                else
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }
+            }
 
-                history.PomodoroSayisi = 0;
-                history.KisaMolaSayisi = 0;
-                history.UzunMolaSayisi = 0;
-                history.ToplamPomodoroDakikasi = 0;
-                history.Tarih = DateTime.Now.ToString("dd/MM/yyyy");
+            try
+            {
+                if (historyManager.GetHistories().Last().Tarih == DateTime.Now.ToString("dd/MM/yyyy"))
+                {
+                    PomodoroSayisi = historyManager.GetHistories().Last().PomodoroSayisi;
+                    KisaMolaSayisi = historyManager.GetHistories().Last().KisaMolaSayisi;
+                    UzunMolaSayisi = historyManager.GetHistories().Last().UzunMolaSayisi;
+                    ToplamPomodoroDakikasi = historyManager.GetHistories().Last().ToplamPomodoroDakikasi;
+                }
+                else
+                {
+                    History history = new History();
 
-                historyManager.SaveHistory(history);
+                    history.PomodoroSayisi = 0;
+                    history.KisaMolaSayisi = 0;
+                    history.UzunMolaSayisi = 0;
+                    history.ToplamPomodoroDakikasi = 0;
+                    history.Tarih = DateTime.Now.ToString("dd/MM/yyyy");
+
+                    historyManager.SaveHistory(history);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBoxResult result = MessageBox.Show("Geçmiş veritabanında hata oluştu. Veritabanı sıfırdan oluşturulsun mu?", "Geçmiş Veritabanında Hata", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    System.IO.File.WriteAllText("PomodoroTimerDb.txt", DateTime.Now.ToString("dd/MM/yyyy") + ",0,0,0,0");
+                    YenidenBaslat();
+                }
+                else
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }
             }
 
             UpdateContent();
