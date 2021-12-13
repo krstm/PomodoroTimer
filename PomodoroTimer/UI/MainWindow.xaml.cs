@@ -2,6 +2,7 @@
 using PomodoroTimer.Business;
 using PomodoroTimer.Entities;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -116,6 +117,8 @@ namespace PomodoroTimer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            VeritabanlariniKontrolEt();
+
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Tick += dispatcherTimer_Tick;
 
@@ -150,6 +153,20 @@ namespace PomodoroTimer
             }
 
             UpdateContent();
+        }
+
+        private void VeritabanlariniKontrolEt()
+        {
+            if (!File.Exists("PomodoroTimerDb.txt"))
+            {
+                System.IO.File.WriteAllText("PomodoroTimerDb.txt", DateTime.Now.ToString("dd/MM/yyyy") + ",0,0,0,0");
+                MessageBox.Show("Geçmiş veritabanı bulunamadı. Sıfırdan oluşturuldu.");
+            }
+            if (!File.Exists("PomodoroTimerSettings.txt"))
+            {
+                System.IO.File.WriteAllText("PomodoroTimerSettings.txt", "25,5,15,500,350");
+                MessageBox.Show("Ayarlar veritabanı bulunamadı. Sıfırdan oluşturuldu.");
+            }
         }
 
         private string DakikaString(int saniye)

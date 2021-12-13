@@ -13,7 +13,7 @@ namespace PomodoroTimer.Business
             return settingDal.ReadSettings();
         }
 
-        internal void SaveSettings(Setting setting)
+        public void SaveSettings(Setting setting)
         {
             settingDal.WriteSettings(setting);
         }
