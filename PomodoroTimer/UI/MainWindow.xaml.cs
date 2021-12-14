@@ -116,7 +116,7 @@ namespace PomodoroTimer
             }
         }
 
-        private void YenidenBaslat()
+        private static void YenidenBaslat()
         {
             var currentExecutablePath = Process.GetCurrentProcess().MainModule.FileName;
             Process.Start(currentExecutablePath);
@@ -144,16 +144,7 @@ namespace PomodoroTimer
             }
             catch (Exception)
             {
-                MessageBoxResult result = MessageBox.Show("Ayarlar veritabanında hata oluştu. Veritabanı sıfırdan oluşturulsun mu?", "Ayarlar Veritabanında Hata", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    System.IO.File.WriteAllText("PomodoroTimerSettings.txt", "25,5,15,500,350");
-                    YenidenBaslat();
-                }
-                else
-                {
-                    System.Windows.Application.Current.Shutdown();
-                }
+                AyarlardaHata();
             }
 
             try
@@ -180,19 +171,38 @@ namespace PomodoroTimer
             }
             catch (Exception)
             {
-                MessageBoxResult result = MessageBox.Show("Geçmiş veritabanında hata oluştu. Veritabanı sıfırdan oluşturulsun mu?", "Geçmiş Veritabanında Hata", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    System.IO.File.WriteAllText("PomodoroTimerDb.txt", DateTime.Now.ToString("dd/MM/yyyy") + ",0,0,0,0");
-                    YenidenBaslat();
-                }
-                else
-                {
-                    System.Windows.Application.Current.Shutdown();
-                }
+                GecmisteHata();
             }
 
             UpdateContent();
+        }
+
+        public static void GecmisteHata()
+        {
+            MessageBoxResult result = MessageBox.Show("Geçmiş veritabanında hata oluştu. Veritabanı sıfırdan oluşturulsun mu?", "Geçmiş Veritabanında Hata", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                System.IO.File.WriteAllText("PomodoroTimerDb.txt", DateTime.Now.ToString("dd/MM/yyyy") + ",0,0,0,0");
+                YenidenBaslat();
+            }
+            else
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
+
+        public static void AyarlardaHata()
+        {
+            MessageBoxResult result = MessageBox.Show("Ayarlar veritabanında hata oluştu. Veritabanı sıfırdan oluşturulsun mu?", "Ayarlar Veritabanında Hata", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                System.IO.File.WriteAllText("PomodoroTimerSettings.txt", "25,5,15,500,350");
+                YenidenBaslat();
+            }
+            else
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
         }
 
         private void VeritabanlariniKontrolEt()

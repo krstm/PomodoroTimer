@@ -15,7 +15,47 @@ namespace PomodoroTimer.Business
 
         internal List<History> GetHistories()
         {
-            return historyDal.ReadHistories();
+            bool uygunluk = false;
+            foreach (History history in historyDal.ReadHistories())
+            {
+                if (!(string.IsNullOrEmpty(history.Id.ToString())) &&
+                    !(string.IsNullOrEmpty(history.Tarih.ToString())) &&
+                    !(string.IsNullOrEmpty(history.PomodoroSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(history.KisaMolaSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(history.UzunMolaSayisi.ToString())) &&
+                    !(string.IsNullOrEmpty(history.ToplamPomodoroDakikasi.ToString())))
+                {
+                    if (RegexKontrol(history.Tarih) &&
+                        Int32.TryParse(history.Id.ToString(), out int value1) &&
+                        Int32.TryParse(history.PomodoroSayisi.ToString(), out int value2) &&
+                        Int32.TryParse(history.KisaMolaSayisi.ToString(), out int value3) &&
+                        Int32.TryParse(history.UzunMolaSayisi.ToString(), out int value4) &&
+                        Int32.TryParse(history.ToplamPomodoroDakikasi.ToString(), out int value5))
+                    {
+                        uygunluk = true;
+                    }
+                    else
+                    {
+                        uygunluk = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    uygunluk = false;
+                    break;
+                }
+            }
+
+            if (uygunluk)
+            {
+                return historyDal.ReadHistories();
+            }
+            else
+            {
+                return new List<History>();
+                MainWindow.GecmisteHata();
+            }
         }
 
         private bool RegexKontrol(string text)
