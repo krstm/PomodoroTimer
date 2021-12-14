@@ -6,14 +6,9 @@ namespace PomodoroTimer.DataAccess
 {
     internal class SettingDal
     {
-        private string SettingsDbFileName { get; } = "PomodoroTimerSettings.txt";
+        public static string SettingsDbFileName { get; } = "PomodoroTimerSettings.txt";
         private string[] stringArray;
         private string settingsText;
-
-        public SettingDal(string SettingFileName)
-        {
-            SettingsDbFileName = SettingFileName;
-        }
 
         public Setting ReadSettings()
         {

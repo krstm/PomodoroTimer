@@ -18,34 +18,27 @@ namespace PomodoroTimer.DataAccess
 
         public List<History> ReadHistories()
         {
-            if (File.Exists(HistoryDbFileName))
-            {
-                var allLines = File.ReadAllLines(HistoryDbFileName);
-                List<string> lines = new List<string>(allLines);
+            var allLines = File.ReadAllLines(HistoryDbFileName);
+            List<string> lines = new List<string>(allLines);
 
-                foreach (string line in lines)
+            foreach (string line in lines)
+            {
+                stringArray = line.Split(',');
+
+                historyList.Add(new History()
                 {
-                    stringArray = line.Split(',');
+                    Id = count,
+                    Tarih = stringArray[0],
+                    PomodoroSayisi = Convert.ToInt32(stringArray[1]),
+                    KisaMolaSayisi = Convert.ToInt32(stringArray[2]),
+                    UzunMolaSayisi = Convert.ToInt32(stringArray[3]),
+                    ToplamPomodoroDakikasi = Convert.ToInt32(stringArray[4]),
+                });
 
-                    historyList.Add(new History()
-                    {
-                        Id = count,
-                        Tarih = stringArray[0],
-                        PomodoroSayisi = Convert.ToInt32(stringArray[1]),
-                        KisaMolaSayisi = Convert.ToInt32(stringArray[2]),
-                        UzunMolaSayisi = Convert.ToInt32(stringArray[3]),
-                        ToplamPomodoroDakikasi = Convert.ToInt32(stringArray[4]),
-                    });
-
-                    count++;
-                }
-
-                return historyList;
+                count++;
             }
-            else
-            {
-                return new List<History>();
-            }
+
+            return historyList;
         }
 
         public void WriteHistory(History history)
