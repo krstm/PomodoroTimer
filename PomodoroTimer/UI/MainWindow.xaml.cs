@@ -41,6 +41,8 @@ namespace PomodoroTimer
         public static int UzunMolaSuresi { get; set; }
         public static int ToplamPomodoroDakikasi { get; set; }
 
+        public string tempTarih { get; set; }
+
         private static Durum durum;
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -101,13 +103,26 @@ namespace PomodoroTimer
                 UpdateContent();
             }
 
-            history.Tarih = DateTime.Now.ToString("dd/MM/yyyy");
-            history.PomodoroSayisi = PomodoroSayisi;
-            history.KisaMolaSayisi = KisaMolaSayisi;
-            history.UzunMolaSayisi = UzunMolaSayisi;
-            history.ToplamPomodoroDakikasi = ToplamPomodoroDakikasi;
-
-            historyManager.SaveHistory(history);
+            if (tempTarih == DateTime.Now.ToString("dd/MM/yyyy"))
+            {
+                history.Tarih = DateTime.Now.ToString("dd/MM/yyyy");
+                history.PomodoroSayisi = PomodoroSayisi;
+                history.KisaMolaSayisi = KisaMolaSayisi;
+                history.UzunMolaSayisi = UzunMolaSayisi;
+                history.ToplamPomodoroDakikasi = ToplamPomodoroDakikasi;
+                historyManager.SaveHistory(history);
+            }
+            else
+            {
+                history.Tarih = tempTarih;
+                history.PomodoroSayisi = PomodoroSayisi;
+                history.KisaMolaSayisi = KisaMolaSayisi;
+                history.UzunMolaSayisi = UzunMolaSayisi;
+                history.ToplamPomodoroDakikasi = ToplamPomodoroDakikasi;
+                historyManager.SaveHistory(history);
+                MessageBox.Show("Tarih değişti. Yeni gün sıfırdan başlayacak");
+                YenidenBaslat();
+            }
 
             if (IsTheHistoryWindowOpen)
             {
@@ -132,6 +147,8 @@ namespace PomodoroTimer
 
             SettingManager settingManager = new SettingManager();
             HistoryManager historyManager = new HistoryManager();
+
+            tempTarih = DateTime.Now.ToString("dd/MM/yyyy");
 
             try
             {
